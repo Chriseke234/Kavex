@@ -1,0 +1,21 @@
+{
+  "name": "Kavex — Africa's B2B Marketplace",
+  "short_name": "Kavex",
+  "description": "The trusted gateway for sourcing authentic African products direct from verified Nigerian producers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#001f3f",
+  "icons": [
+    {
+      "src": "/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

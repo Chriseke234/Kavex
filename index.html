@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavex | Africa's Trusted B2B Marketplace for Verified Suppliers</title>
+    <meta name="description" content="Source authentic Nigerian exports direct from verified suppliers. Escrow-protected payments, global shipping, and AI-powered sourcing. Join Kavex today.">
+    
+    <!-- PWA & Favicon -->
+    <script src="/assets/js/env-inject.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#001f3f">
+    <link rel="icon" type="image/svg+xml" href="/assets/img/logo.svg">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kavex.ng/">
+    <meta property="og:title" content="Kavex | Africa's Trusted B2B Marketplace">
+    <meta property="og:description" content="Source authentic Nigerian exports direct from verified suppliers. Escrow-protected payments and global shipping.">
+    <meta property="og:image" content="https://kavex.ng/assets/img/og-image.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kavex | Africa's Trusted B2B Marketplace">
+    <meta name="twitter:description" content="Sourcing made simple. Connect with verified Nigerian producers instantly.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://kavex.ng/">
+
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://checkout.flutterwave.com">
+
+    <!-- JSON-LD WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kavex",
+      "url": "https://kavex.ng/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://kavex.ng/pages/marketplace/products.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/ai-chat.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/ai-chat.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-light">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="container nav-container">
+            <a href="/" class="logo" aria-label="Kavex Home">
+                <img src="/assets/img/logo.svg" alt="Kavex Logo" width="120" height="40">
+            </a>
+            <div class="nav-links">
+                <a href="/pages/marketplace/products.html">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html">Submit RFQ</a>
+                <div id="auth-links" class="nav-auth">
+                    <a href="/pages/auth/login.html" class="btn btn-ghost">Sign In</a>
+                    <a href="/pages/auth/register-buyer.html" class="btn btn-primary">Join Free</a>
+                </div>
+            </div>
+            
+            <div class="nav-actions">
+                <select id="currency-select" class="currency-select" aria-label="Switch Currency">
+                    <option value="NGN">NGN (₦)</option>
+                    <option value="USD">USD ($)</option>
+                </select>
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Africa's Trusted <br> B2B Marketplace</h1>
+                <p>Connect with KYB-verified Nigerian suppliers. Buy in bulk. Sell globally. Every transaction escrow-protected.</p>
+                
+                <div class="hero-btns">
+                    <a href="/pages/marketplace/products.html" class="btn btn-white">Start Buying</a>
+                    <a href="/pages/auth/seller-register.html" class="btn btn-primary">Become a Seller</a>
+                </div>
+
+                <div class="hero-trust-bar">
+                    <div class="trust-pill">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                        2,400+ Verified Sellers
+                    </div>
+                    <div class="trust-pill">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                        15,000+ Products
+                    </div>
+                    <div class="trust-pill">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                        30+ Countries
+                    </div>
+                    <div class="trust-pill">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                        Escrow Protected
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2>How Kavex works</h2>
+                <div class="how-grid">
+                    <!-- For Buyers -->
+                    <div class="how-card">
+                        <div class="how-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        </div>
+                        <h3>For Buyers</h3>
+                        <ul class="how-steps">
+                            <li><span class="step-num">01</span> Browse verified suppliers and products</li>
+                            <li><span class="step-num">02</span> Place bulk orders or request quotations</li>
+                            <li><span class="step-num">03</span> Pay into escrow and track your delivery</li>
+                        </ul>
+                    </div>
+                    <!-- For Sellers -->
+                    <div class="how-card">
+                        <div class="how-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3>For Sellers</h3>
+                        <ul class="how-steps">
+                            <li><span class="step-num">01</span> Pass KYB verification and list products</li>
+                            <li><span class="step-num">02</span> Receive bulk orders and RFQs instantly</li>
+                            <li><span class="step-num">03</span> Ship goods and receive escrow payout</li>
+                        </ul>
+                    </div>
+                    <!-- Escrow -->
+                    <div class="how-card">
+                        <div class="how-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3>Escrow Protection</h3>
+                        <ul class="how-steps">
+                            <li><span class="step-num">01</span> Payment held securely via Flutterwave</li>
+                            <li><span class="step-num">02</span> Funds released only after confirmation</li>
+                            <li><span class="step-num">03</span> Dispute resolution by Kavex specialists</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Categories -->
+        <section id="marketplace" class="categories">
+            <div class="container">
+                <h2>Browse by category</h2>
+                <div class="categories-grid">
+                    <a href="/category/agriculture" class="cat-card">
+                        <div class="cat-icon">🌾</div>
+                        <h3>Agriculture & Food</h3>
+                        <p class="cat-count">4,200+ products</p>
+                        <p class="cat-price">From <span class="price-display" data-price-ngn="15000">₦15,000</span> / ton</p>
+                    </a>
+                    <a href="/category/textiles" class="cat-card">
+                        <div class="cat-icon">👔</div>
+                        <h3>Textiles & Fashion</h3>
+                        <p class="cat-count">2,800+ products</p>
+                        <p class="cat-price">From <span class="price-display" data-price-ngn="2500">₦2,500</span> / yard</p>
+                    </a>
+                    <a href="/category/electronics" class="cat-card">
+                        <div class="cat-icon">💻</div>
+                        <h3>Electronics</h3>
+                        <p class="cat-count">1,500+ products</p>
+                    </a>
+                    <a href="/category/industrial" class="cat-card">
+                        <div class="cat-icon">🏗️</div>
+                        <h3>Industrial & Manufacturing</h3>
+                        <p class="cat-count">3,100+ products</p>
+                    </a>
+                    <a href="/category/beauty" class="cat-card">
+                        <div class="cat-icon">🧴</div>
+                        <h3>Beauty & Wellness</h3>
+                        <p class="cat-count">1,200+ products</p>
+                    </a>
+                    <a href="/category/raw-materials" class="cat-card">
+                        <div class="cat-icon">🪵</div>
+                        <h3>Raw Materials</h3>
+                        <p class="cat-count">2,400+ products</p>
+                    </a>
+                </div>
+                <div class="browse-btn-container">
+                    <a href="/categories" class="btn btn-outline-navy">Browse All Categories</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Sellers -->
+        <section class="sellers">
+            <div class="container">
+                <h2>Top verified sellers</h2>
+                <div class="sellers-grid">
+                    <!-- Seller 1 -->
+                    <div class="seller-card">
+                        <div class="seller-avatar">OA</div>
+                        <div class="seller-badge">Textiles</div>
+                        <h3>Olu & Associates</h3>
+                        <p class="text-muted">Lagos, Nigeria</p>
+                        <p class="seller-price">Avg. Order: <span class="price-display" data-price-ngn="450000">₦450,000</span></p>
+                        <div class="seller-verified">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                            Verified Seller
+                        </div>
+                        <a href="/store/olu" class="btn btn-primary btn-store">View Store</a>
+                    </div>
+                    <!-- Seller 2 -->
+                    <div class="seller-card">
+                        <div class="seller-avatar">AF</div>
+                        <div class="seller-badge">Agriculture</div>
+                        <h3>Abuja Farm Hub</h3>
+                        <p class="text-muted">Abuja, Nigeria</p>
+                        <div class="seller-verified">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                            Verified Seller
+                        </div>
+                        <a href="/store/abuja" class="btn btn-primary btn-store">View Store</a>
+                    </div>
+                    <!-- Seller 3 -->
+                    <div class="seller-card">
+                        <div class="seller-avatar">KM</div>
+                        <div class="seller-badge">Industrial</div>
+                        <h3>Kano Metalworks</h3>
+                        <p class="text-muted">Kano, Nigeria</p>
+                        <div class="seller-verified">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                            Verified Seller
+                        </div>
+                        <a href="/store/kano" class="btn btn-primary btn-store">View Store</a>
+                    </div>
+                    <!-- Seller 4 -->
+                    <div class="seller-card">
+                        <div class="seller-avatar">BE</div>
+                        <div class="seller-badge">Cosmetics</div>
+                        <h3>BioExtracts Ltd</h3>
+                        <p class="text-muted">Enugu, Nigeria</p>
+                        <div class="seller-verified">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
+                            Verified Seller
+                        </div>
+                        <a href="/store/bio" class="btn btn-primary btn-store">View Store</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Kavex -->
+        <section class="why-kavex">
+            <div class="container">
+                <div class="why-grid">
+                    <div class="why-item">
+                        <div class="how-icon">🛡️</div>
+                        <h3>Escrow Payments</h3>
+                        <p>Your funds are held securely until you confirm receipt of goods. No risk, full transparency.</p>
+                    </div>
+                    <div class="why-item">
+                        <div class="how-icon">✅</div>
+                        <h3>KYB Verified</h3>
+                        <p>We verify every business using CAC details and bank data to ensure you only trade with real suppliers.</p>
+                    </div>
+                    <div class="why-item">
+                        <div class="how-icon">🚚</div>
+                        <h3>Africa-Wide Delivery</h3>
+                        <p>Fully integrated with GIGL, Sendbox, and DHL for seamless cross-border logistics.</p>
+                    </div>
+                    <div class="why-item">
+                        <div class="how-icon">🤖</div>
+                        <h3>24/7 AI Support</h3>
+                        <p>Our AI Trade Assistant helps with sourcing, compliance, and trade advice at any hour.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section class="cta-banner">
+            <div class="container">
+                <h2>Ready to grow your business across Africa?</h2>
+                <div class="hero-btns">
+                    <a href="/pages/auth/seller-register.html" class="btn btn-white">Start Selling Free</a>
+                    <a href="/pages/marketplace/products.html" class="btn btn-primary">Browse Suppliers</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="/" class="logo" style="margin-bottom: 2rem;">
+                        <span>Kav</span><span>ex</span>
+                    </a>
+                    <p class="text-muted">The African equivalent of Amazon Business. Connecting Nigeria to the world.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>About Kavex</h4>
+                    <ul>
+                        <li><a href="/about">Our Story</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press & Media</a></li>
+                        <li><a href="/contact">Contact Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/how-it-works">How It Works</a></li>
+                        <li><a href="/marketplace">Marketplace</a></li>
+                        <li><a href="/rfq">Request Quote</a></li>
+                        <li><a href="/categories">All Categories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>For Sellers</h4>
+                    <ul>
+                        <li><a href="/pages/auth/seller-register.html">Sell on Kavex</a></li>
+                        <li><a href="/pricing">Pricing Plans</a></li>
+                        <li><a href="/seller/faq">Seller FAQ</a></li>
+                        <li><a href="/verification">KYB Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kavex Technologies. All rights reserved.</p>
+                <div style="display: flex; gap: 2rem;">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                </div>
+                <div class="social-links">
+                    <a href="#">LN</a>
+                    <a href="#">TW</a>
+                    <a href="#">IG</a>
+                    <a href="#">WA</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/supabase-client.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/ai-chat.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

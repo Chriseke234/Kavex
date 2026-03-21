@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit RFQ | Kavex — Sourcing directly from verified Nigerian suppliers</title>
+    <meta name="description" content="Submit your product requirements to hundreds of verified Nigerian exporters. Receive competitive quotes within 24 hours. Secure B2B sourcing made simple.">
+    
+    <!-- PWA & Favicon -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#001f3f">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+
+    <!-- OG & Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Submit RFQ | Kavex — Sourcing from Nigeria">
+    <meta property="og:description" content="Broadcast your requirements to verified producers on Kavex.">
+    <meta property="og:image" content="https://kavex.ng/assets/img/og-rfq.jpg">
+    <meta name="twitter:card" content="summary">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.resend.com">
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/rfq.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="container flex justify-between items-center">
+            <a href="/" class="logo" aria-label="Kavex Home"><span>Kav</span><span>ex</span></a>
+            <div class="nav-links">
+                <a href="/pages/marketplace/products.html">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html" class="active">Submit RFQ</a>
+                <div id="auth-links" class="nav-auth">
+                    <a href="/pages/auth/login.html" class="btn btn-ghost">Sign In</a>
+                    <a href="/pages/auth/register-buyer.html" class="btn btn-primary">Join Free</a>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="rfq-page container mt-4 mb-6" id="main-content">
+        <div class="rfq-grid">
+            <!-- Left: Form -->
+            <div class="rfq-form-section card p-3">
+                <div class="hero mb-2">
+                    <h1 class="mb-0-5">Source directly from verified Nigerian suppliers</h1>
+                    <p class="text-muted">Submit your requirements and receive competitive quotes within 24 hours.</p>
+                </div>
+
+                <form id="rfq-public-form" class="mt-2">
+                    <div class="form-grid-2">
+                        <div class="form-group relative">
+                            <label>Product / Commodity Needed</label>
+                            <input type="text" id="commodity-input" name="title" placeholder="e.g. Soybeans, Hibiscus" required autocomplete="off">
+                            <div id="autocomplete-results" class="autocomplete-list hidden"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="" disabled selected>Select category</option>
+                                <option>Agriculture</option>
+                                <option>Textiles</option>
+                                <option>Machinery</option>
+                                <option>Industrial</option>
+                                <option>Beauty</option>
+                                <option>Raw Materials</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-3 mt-1">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" placeholder="100" required min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Unit</label>
+                            <select name="unit" required>
+                                <option>Tonnes</option>
+                                <option>Kilograms (kg)</option>
+                                <option>Units</option>
+                                <option>Cartons</option>
+                                <option>Pallets</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Price (Optional)</label>
+                            <div class="flex">
+                                <select name="currency" class="w-auto" style="border-right:0; border-radius: 8px 0 0 8px;">
+                                    <option>USD</option>
+                                    <option>NGN</option>
+                                    <option>EUR</option>
+                                </select>
+                                <input type="number" name="budget_max" placeholder="0.00" style="border-radius: 0 8px 8px 0;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2 mt-1">
+                        <div class="form-group">
+                            <label>Delivery Destination (Country)</label>
+                            <input type="text" name="destination_country" placeholder="Vietnam, Germany..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Required By Date</label>
+                            <input type="date" name="deadline" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-1">
+                        <label>Detailed Requirements</label>
+                        <textarea name="description" rows="5" placeholder="Specify quality grades, certifications (ISO, NAFDAC), moisture content, packaging preferences, etc." required></textarea>
+                    </div>
+
+                    <div class="form-group mt-1">
+                        <label>Attach Specification PDF (Optional)</label>
+                        <div class="file-upload-zone" id="file-drop-zone">
+                            <input type="file" id="rfq-file" accept=".pdf" class="hidden">
+                            <label for="rfq-file" class="pointer">
+                                <span>Click to upload</span> or drag and drop<br>
+                                <span class="fs-xs text-muted">PDF only, max 5MB</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="guest-info-section mt-2 p-1-5 border-top border-navy-light" id="guest-fields">
+                        <h4 class="mb-1">Contact Information</h4>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" name="company_name" placeholder="ABC Global Trade" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Business Email</label>
+                                <input type="email" name="email" placeholder="trade@company.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-1">
+                            <label>Phone Number</label>
+                            <input type="tel" name="phone" placeholder="+234..." required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full mt-2 py-1 fs-lg" id="submit-rfq-btn">
+                        Submit RFQ to All Verified Sellers
+                    </button>
+                    <p class="text-center fs-xs text-muted mt-1">By submitting, you agree to Kavex Trade Terms & Privacy Policy.</p>
+                </form>
+            </div>
+
+            <!-- Right: Info -->
+            <div class="rfq-info-section">
+                <div class="card p-2 mb-2 bg-navy text-white">
+                    <h3 class="mb-1">How it works</h3>
+                    <div class="stepper-vertical text-white">
+                        <div class="step-item">
+                            <div class="step-circle">1</div>
+                            <div class="step-content">
+                                <strong>Submit Requirements</strong>
+                                <p class="fs-sm opacity-8">Provide detailed specs to get accurate quotes.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-circle">2</div>
+                            <div class="step-content">
+                                <strong>Receive Quotes</strong>
+                                <p class="fs-sm opacity-8">Verified suppliers will bid on your request within 24 hours.</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-circle">3</div>
+                            <div class="step-content">
+                                <strong>Compare & Order</strong>
+                                <p class="fs-sm opacity-8">Review profiles, chat with sellers, and pay via secure escrow.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-2 border-orange">
+                    <h4 class="mb-1 text-orange">Why Source via Kavex?</h4>
+                    <ul class="list-unstyled space-y-1 fs-sm">
+                        <li>✅ <strong>KYB Verified Sellers:</strong> Every supplier is manually vetted.</li>
+                        <li>✅ <strong>Escrow Protection:</strong> Funds held until goods are confirmed.</li>
+                        <li>✅ <strong>Quality Assurance:</strong> Dispute mediation for spec mismatch.</li>
+                        <li>✅ <strong>Export Experts:</strong> Sellers specialized in international logistics.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal hidden" id="rfq-success-modal">
+        <div class="modal-content text-center p-3" style="max-width: 500px;">
+            <div class="fs-xxl mb-1">🚀</div>
+            <h2 class="mb-1">RFQ Submitted Successfully!</h2>
+            <p class="text-muted mb-2">Your request has been broadcast to verified sellers in the category. You'll receive email alerts when they respond.</p>
+            
+            <div class="reg-bridge p-2 bg-gray rounded" id="reg-bridge">
+                <h4>Track your quotes</h4>
+                <p class="fs-sm mb-1-5">Create a free password to access your dashboard and chat with suppliers.</p>
+                <div class="form-group mb-1">
+                    <input type="password" id="bridge-password" placeholder="Create a password" class="w-full">
+                </div>
+                <button class="btn btn-primary w-full" id="complete-reg-btn">Complete Account Setup</button>
+            </div>
+
+            <button class="btn btn-ghost mt-2" onclick="location.href='/'">Back to Home</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/rfq.js"></script>
+
+</body>
+</html>

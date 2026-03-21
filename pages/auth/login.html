@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — Kavex B2B</title>
+    <script src="/assets/js/env-inject.js"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/auth-pages.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-white">
+
+    <div class="auth-split-container">
+        <!-- Sidebar -->
+        <div class="auth-sidebar">
+            <a href="/" class="logo" aria-label="Kavex Home">
+                <span>Kav</span><span>ex</span>
+            </a>
+            <h2 class="mb-1">Africa's trusted <br> B2B marketplace.</h2>
+            <p class="text-muted">Connecting verified Nigerian suppliers with global trade partners.</p>
+
+            <div class="trust-points">
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div>
+                        <div class="fw-bold">KYB Verified Sellers</div>
+                        <p class="fs-xs">Every business is vetted manually.</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div>
+                        <div class="fw-bold">Escrow Protected Payments</div>
+                        <p class="fs-xs">Secure trade via Flutterwave.</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">✓</div>
+                    <div>
+                        <div class="fw-bold">24/7 AI Trade Assistant</div>
+                        <p class="fs-xs">Sourcing help whenever you need it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="auth-content">
+            <div class="auth-form-wrapper">
+                <h1 class="mb-1">Welcome back</h1>
+                <p class="text-muted mb-2">Please enter your credentials to access your account.</p>
+
+                <div id="login-error" class="alert-inline error" style="display:none;"></div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Business Email</label>
+                        <input type="email" id="email" name="email" placeholder="ceo@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="flex justify-between items-center mb-0-5">
+                            <label for="password" class="mb-0">Password</label>
+                            <a href="/pages/auth/forgot-password.html" class="fs-xs fw-bold text-orange">Forgot password?</a>
+                        </div>
+                        <div class="input-group-auth">
+                            <input type="password" id="password" name="password" required>
+                            <span class="password-toggle">SHOW</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full mt-1">Sign In</button>
+                </form>
+
+                <div class="divider">or continue with</div>
+
+                <button class="btn-social" onclick="handleGoogleLogin()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google Logo">
+                    <span>Google Workspace</span>
+                </button>
+
+                <div class="text-center mt-3">
+                    <p class="fs-sm text-muted">Don't have an account?</p>
+                    <div class="flex gap-1 justify-center mt-1">
+                        <a href="/pages/auth/seller-register.html" class="fs-sm fw-bold text-navy">Sell on Kavex</a>
+                        <span class="text-muted">•</span>
+                        <a href="/pages/auth/register-buyer.html" class="fs-sm fw-bold text-orange">Sign up as Buyer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/login.js"></script>
+</body>
+</html>

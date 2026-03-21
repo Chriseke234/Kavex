@@ -1,0 +1,134 @@
+/* Admin Panel Styles */
+.admin-body {
+    background: #f4f7f9;
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 260px;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1.5rem 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 2rem;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: rgba(255,255,255,0.05);
+    color: white;
+    border-left: 4px solid var(--orange);
+}
+
+.nav-item .icon {
+    width: 24px;
+    margin-right: 12px;
+}
+
+/* Main Content */
+.admin-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 2.5rem;
+}
+
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+/* Tables */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th {
+    text-align: left;
+    padding: 1rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--navy);
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 0.9rem;
+}
+
+/* Badges */
+.badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.badge-red { background: #fee2e2; color: #b91c1c; }
+.badge-orange { background: #ffedd5; color: #c2410c; }
+.badge-green { background: #dcfce7; color: #15803d; }
+
+/* KPI Cards */
+.kpi-card {
+    padding: 1.5rem;
+    border-left: 4px solid var(--navy);
+}
+
+/* Activity Feed */
+.activity-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 0.85rem;
+}
+
+/* Admin Sections Hide/Show */
+.admin-section {
+    display: none;
+}
+.admin-section.active {
+    display: block;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    width: 50px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .admin-sidebar { width: 80px; }
+    .admin-sidebar .nav-item span:not(.icon) { display: none; }
+    .admin-sidebar .logo { font-size: 0; }
+    .admin-sidebar .logo span:first-child { font-size: 1.25rem; }
+    .admin-content { margin-left: 80px; }
+}

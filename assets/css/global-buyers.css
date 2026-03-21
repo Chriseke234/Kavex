@@ -1,0 +1,105 @@
+/* Global Buyers Landing Styles */
+
+.global-hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background: radial-gradient(circle at 100% 100%, #001f3f 0%, #000b1a 100%);
+}
+
+.hero-bg-accent {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60%;
+    height: 120%;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_Map_Blank.svg') no-repeat;
+    background-size: cover;
+    opacity: 0.1;
+    pointer-events: none;
+    filter: invert(1);
+}
+
+/* Pillar Cards */
+.pillar-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pillar-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Category Pills */
+.cat-pill img {
+    height: 140px;
+    margin-bottom: 1rem;
+}
+
+/* Trade Stepper (Horizontal) */
+.trade-stepper {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+    position: relative;
+    padding-top: 2rem;
+}
+
+.trade-stepper::before {
+    content: '';
+    position: absolute;
+    top: 4rem;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: #ddd;
+    z-index: 1;
+}
+
+.trade-step {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.step-num {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--navy);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.trade-step h5 {
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+}
+
+/* Testimonials */
+.testi-card {
+    transition: opacity 0.3s;
+}
+.testi-card:hover {
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .grid-4, .grid-5, .trade-stepper {
+        grid-template-columns: 1fr 1fr;
+    }
+    .trade-stepper::before { display: none; }
+    .global-hero .fs-xxl { font-size: 2.5rem; }
+}
+
+@media (max-width: 600px) {
+    .grid-4, .grid-5, .grid-3 {
+        grid-template-columns: 1fr;
+    }
+}

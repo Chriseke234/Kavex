@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard — Kavex</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/seller-ai-generator.css">
+    <!-- Third Party -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/env-inject.js"></script>
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="/" class="logo" style="color: white;"><span>Kav</span><span>ex</span></a>
+            </div>
+            
+            <div class="sidebar-user">
+                <img src="https://picsum.photos/100/100" alt="Store Logo" id="sidebar-store-logo">
+                <div>
+                    <div class="fw-bold fs-sm" id="sidebar-store-name">Loading Store...</div>
+                    <div class="fs-xs text-muted" style="color: rgba(255,255,255,0.5) !important;">Verified Seller</div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-item active" data-section="overview">
+                    <span>🏠</span> Overview
+                </div>
+                <div class="nav-item" data-section="products">
+                    <span>📦</span> Products
+                </div>
+                <div class="nav-item" data-section="orders">
+                    <span>🛒</span> Orders
+                </div>
+                <div class="nav-item" data-section="analytics">
+                    <span>📊</span> Analytics
+                </div>
+                <div class="nav-item" data-section="rfq">
+                    <span>⚖️</span> RFQ Requests
+                </div>
+                <div class="nav-item" data-section="payouts">
+                    <span>💰</span> Payouts
+                </div>
+                <div class="nav-item" data-section="kyb">
+                    <span>🛡️</span> KYB Status
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <span>⚙️</span> Store Settings
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="fs-sm text-muted">Need help?</a>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar-dash">
+                    <input type="text" placeholder="Search orders, products...">
+                </div>
+
+                <div class="top-bar-actions">
+                    <div class="notification-bell">
+                        <span>🔔</span>
+                        <div class="unread-badge">3</div>
+                    </div>
+                    
+                    <div class="user-profile-drop flex items-center gap-0-5 pointer">
+                        <span class="fs-sm fw-bold" id="topbar-user-name">...</span>
+                        <span>▼</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTION: OVERVIEW -->
+            <div id="overview-section" class="section-container active">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>Dashboard Overview</h1>
+                    <button class="btn btn-primary btn-sm">Download Report</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Revenue This Month</div>
+                        <div class="stat-value">₦0.00</div>
+                        <div class="stat-trend trend-up">↑ 0% vs last month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Orders</div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-trend text-muted">2 need action</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Products Listed</div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-trend text-muted">0 pending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Store Rating</div>
+                        <div class="stat-value">0.0</div>
+                        <div class="stat-trend text-muted">Based on 0 reviews</div>
+                    </div>
+                </div>
+
+                <div class="card p-2 mb-2">
+                    <h3 class="mb-1">Revenue Trend (30 Days)</h3>
+                    <canvas id="revenueChart" height="100"></canvas>
+                </div>
+            </div>
+
+            <!-- SECTION: PRODUCTS -->
+            <div id="products-section" class="section-container">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>Product Management</h1>
+                    <button class="btn btn-primary" onclick="openProductPanel()">+ Add New Product</button>
+                </div>
+                <div class="dash-table-container">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>From Price</th>
+                                <th>MOQ</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: ORDERS -->
+            <div id="orders-section" class="section-container">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>Orders</h1>
+                    <div class="flex gap-0-5">
+                        <button class="btn btn-ghost btn-xs active">All</button>
+                        <button class="btn btn-ghost btn-xs">Pending</button>
+                        <button class="btn btn-ghost btn-xs">Shipped</button>
+                    </div>
+                </div>
+                <div class="dash-table-container">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Ref #</th>
+                                <th>Buyer</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: ANALYTICS -->
+            <div id="analytics-section" class="section-container">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>Analytics & Insights</h1>
+                    <select class="btn btn-ghost btn-sm" id="analytics-timerange">
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-1-5">
+                    <div class="card p-1-5">
+                        <h3>Orders by Category</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    <div class="card p-1-5">
+                        <h3>Top Products</h3>
+                        <canvas id="topProductsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: RFQ REQUESTS -->
+            <div id="rfq-section" class="section-container">
+                <h1 class="mb-2">Sourcing Requests (RFQ)</h1>
+                <div class="dash-table-container">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Buyer</th>
+                                <th>Product Wanted</th>
+                                <th>Quantity</th>
+                                <th>Budget</th>
+                                <th>Deadline</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rfq-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: PAYOUTS -->
+            <div id="payouts-section" class="section-container">
+                <h1 class="mb-2">Payouts & Earnings</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Available for Payout</div>
+                        <div class="stat-value text-orange">₦0.00</div>
+                        <button class="btn btn-primary btn-xs mt-1 w-full">Request Payout</button>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">In Escrow</div>
+                        <div class="stat-value">₦0.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Earned</div>
+                        <div class="stat-value">₦0.00</div>
+                    </div>
+                </div>
+                <h3>Transaction History</h3>
+                <div class="dash-table-container mt-1">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payout-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: KYB STATUS -->
+            <div id="kyb-section" class="section-container">
+                <h1 class="mb-2">KYB Compliance</h1>
+                <div class="card p-2" id="kyb-status-card">
+                    <div class="flex items-center gap-1">
+                        <span id="kyb-badge" class="status-pill status-pending">Status: Pending Review</span>
+                    </div>
+                    <p class="mt-1 text-muted">Your application is currently under review by the Kavex trust team. Verification usually takes 48-72 hours.</p>
+                </div>
+            </div>
+
+            <!-- SECTION: SETTINGS -->
+            <div id="settings-section" class="section-container">
+                <h1 class="mb-2">Store Settings</h1>
+                <form id="store-settings-form" class="card p-2" style="max-width: 600px;">
+                    <div class="form-group">
+                        <label>Store Name</label>
+                        <input type="text" name="store_name" id="settings-store-name">
+                    </div>
+                    <div class="form-group">
+                        <label>Store Tagline</label>
+                        <input type="text" name="tagline" placeholder="Quality Nigerian textiles...">
+                    </div>
+                    <div class="form-group">
+                        <label>Store Description</label>
+                        <textarea name="description" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-1">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- SECTION: AI LISTING GENERATOR -->
+            <div id="ai-listing-section" class="section-container">
+                <div class="flex items-center gap-1 mb-2">
+                    <button class="btn btn-ghost btn-sm" onclick="switchSection('products')">← Back to Products</button>
+                    <h1>AI Listing Assistant</h1>
+                </div>
+
+                <div class="ai-listing-grid">
+                    <!-- Left: AI Wizard -->
+                    <div class="ai-wizard-panel card p-0">
+                        <div class="wizard-header p-1-5 border-bottom">
+                            <div class="flex justify-between items-center mb-0-5">
+                                <span class="fw-bold" id="wizard-step-text">Step 1 of 6</span>
+                                <a href="javascript:void(0)" onclick="openManualProductForm()" class="fs-xs text-primary">Skip AI</a>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="wizard-progress" style="width: 16%"></div>
+                            </div>
+                        </div>
+                        <div class="wizard-messages p-1-5" id="wizard-messages">
+                            <!-- AI Question Bubbles -->
+                        </div>
+                        <div class="wizard-input-area p-1 border-top">
+                            <div id="wizard-chips" class="flex flex-wrap gap-0-5 mb-1"></div>
+                            <div class="flex gap-0-5">
+                                <input type="text" id="wizard-input" class="flex-1" placeholder="Type your answer...">
+                                <button class="btn btn-primary" id="wizard-next-btn">Answer</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Preview -->
+                    <div class="ai-preview-panel">
+                        <div class="preview-header mb-1 text-muted fs-sm fw-bold">LIVE LISTING PREVIEW</div>
+                        <div class="card p-0 overflow-hidden" id="listing-preview">
+                            <div class="preview-img-placeholder">
+                                <span>Images will appear here</span>
+                            </div>
+                            <div class="p-2">
+                                <div class="flex justify-between items-start mb-0-5">
+                                    <h2 id="preview-title" class="placeholder-text">Product Title</h2>
+                                    <span id="preview-badge" class="status-pill status-pending fs-xs">Draft</span>
+                                </div>
+                                <div id="preview-desc" class="fs-sm text-muted mb-1-5 line-clamp-3">
+                                    Your AI-generated description will appear here...
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="preview-price">
+                                        <span id="preview-currency">₦</span>
+                                        <span id="preview-amount" class="fw-bold fs-lg">0.00</span>
+                                        <span class="fs-xs text-muted">/ unit</span>
+                                    </div>
+                                    <div id="preview-quality" class="quality-tag">Quality: 0%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Post-AI Generation Forms -->
+                        <div id="post-gen-actions" class="mt-2 hidden">
+                            <div class="card p-1-5 mb-1">
+                                <h4 class="fs-sm mb-1">AI Quality Score Suggestions</h4>
+                                <ul id="quality-suggestions" class="fs-xs text-muted"></ul>
+                            </div>
+                            <button class="btn btn-primary w-full" id="publish-ai-product">Publish to Marketplace</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Product Slide-over -->
+    <div class="slide-over" id="product-panel">
+        <div class="slide-over-header">
+            <h2 id="panel-title">Add New Product</h2>
+            <button onclick="closeProductPanel()" class="pointer">✕</button>
+        </div>
+        <div class="slide-over-body">
+            <form id="product-form">
+                <div class="form-group">
+                    <label>Product Title</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category" required>
+                            <option>Agriculture</option>
+                            <option>Textiles</option>
+                            <option>Machinery</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Quantity</label>
+                        <input type="number" name="stock" value="100">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description (Max 2000 chars)</label>
+                    <textarea name="description" rows="5"></textarea>
+                </div>
+                <h3>Pricing Tiers</h3>
+                <div id="pricing-tiers-container">
+                    <!-- Dynamic tiers -->
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm mb-2" onclick="addPricingTier()">+ Add Price Tier</button>
+                <button type="submit" class="btn btn-primary w-full">Save and Publish</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/seller-dashboard.js"></script>
+    <script src="../../assets/js/seller-ai-generator.js"></script>
+</body>
+</html>

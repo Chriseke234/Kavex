@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Storefront | Kavex — Verified Nigerian Producers</title>
+    <meta name="description" content="View verified supplier profiles, browse real-time inventory, and source commodities direct from verified Nigerian producers. Trusted B2B trade.">
+    
+    <!-- PWA & Favicon -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#001f3f">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- JSON-LD LocalBusiness (Placeholder - updated by store.js) -->
+    <script type="application/ld+json" id="store-jsonld">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Kavex Verified Seller",
+      "image": "https://kavex.ng/assets/img/logo.svg",
+      "areaServed": "Global"
+    }
+    </script>
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/marketplace.css">
+    <link rel="stylesheet" href="../../assets/css/store.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navbar -->
+    <nav class="navbar border-bottom" role="navigation" aria-label="Store Navigation">
+        <div class="container flex justify-between items-center">
+            <a href="/" class="logo" aria-label="Kavex Home"><span>Kav</span><span>ex</span></a>
+            <div class="search-bar-inline">
+                <input type="text" placeholder="Search in this store..." aria-label="Search within store">
+            </div>
+            <nav class="nav-links">
+                <a href="/pages/marketplace/products.html">Marketplace</a>
+                <a href="/pages/marketplace/rfq.html">RFQ Center</a>
+            </nav>
+        </div>
+    </nav>
+
+    <!-- Store Header -->
+    <div class="store-header" id="store-header-bg">
+        <div class="container store-profile-wrap">
+            <div class="store-avatar-box">
+                <img id="store-logo" src="https://via.placeholder.com/120" alt="Logo">
+            </div>
+            <div class="store-info-main">
+                <div class="flex items-center gap-1 flex-wrap">
+                    <h1 id="store-name">Loading Store...</h1>
+                    <span class="badge badge-verified hidden" id="verified-badge">Verified</span>
+                </div>
+                <div class="flex gap-2 text-white opacity-9 fs-sm mt-0-5">
+                    <span id="store-location">📍 Loading...</span>
+                    <span id="store-rating">⭐ 0.0 (0 Reviews)</span>
+                </div>
+            </div>
+            <div class="store-actions">
+                <button class="btn btn-outline-white" id="follow-btn">Follow Store</button>
+                <button class="btn btn-primary" id="contact-btn">Message Seller</button>
+            </div>
+        </div>
+    </div>
+
+    </main>
+    <main class="container py-4" id="main-content">
+        <div class="store-layout">
+            <!-- Left: Content -->
+            <div class="store-main">
+                <!-- About Tab -->
+                <section class="card p-2 mb-2">
+                    <h3 class="mb-1">About the Store</h3>
+                    <p id="store-desc" class="text-muted">Loading description...</p>
+                    <div class="grid grid-3 gap-2 mt-2 pt-2 border-top">
+                        <div class="stat-item">
+                            <span class="fs-xs text-muted block">KYB Status</span>
+                            <strong id="kyb-status">Verified</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span class="fs-xs text-muted block">Response Rate</span>
+                            <strong>98%</strong>
+                        </div>
+                        <div class="stat-item">
+                            <span class="fs-xs text-muted block">Joined Kavex</span>
+                            <id id="joined-date">Oct 2023</id>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products -->
+                <section class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3>Available Products</h3>
+                        <span class="fs-sm text-muted" id="product-count">0 items</span>
+                    </div>
+                    <div class="grid grid-3 gap-1-5" id="store-products-grid">
+                        <!-- Products injected via JS -->
+                    </div>
+                </section>
+
+                <!-- Reviews -->
+                <section class="card p-2">
+                    <h3 class="mb-2">Buyer Reviews</h3>
+                    <div class="space-y-2" id="store-reviews">
+                        <p class="text-muted italic">No reviews yet for this store.</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right: Sidebar -->
+            <aside class="store-sidebar">
+                <div class="sticky-sidebar">
+                    <div class="card p-2 mb-2 bg-gray-light">
+                        <h4 class="mb-1">Direct Sourcing</h4>
+                        <p class="fs-xs text-muted mb-1-5">Request a custom quote specifically from this supplier.</p>
+                        <a href="/pages/marketplace/rfq.html" class="btn btn-outline btn-sm w-full mb-1">Send Direct RFQ</a>
+                        <button id="whatsapp-btn" class="btn btn-whatsapp w-full flex items-center justify-center gap-0-5">
+                            <span>💬</span> WhatsApp Seller
+                        </button>
+                    </div>
+
+                    <div class="card p-2 border-navy-light">
+                        <h4 class="mb-1">Fulfillment Stats</h4>
+                        <ul class="list-unstyled space-y-1 fs-sm">
+                            <li class="flex justify-between"><span>On-time Delivery</span> <span>95%</span></li>
+                            <li class="flex justify-between"><span>Refund Rate</span> <span><1%</span></li>
+                            <li class="flex justify-between"><span>Dispute Rate</span> <span>0%</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/store.js"></script>
+
+</body>
+</html>

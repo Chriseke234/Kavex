@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | Kavex — Source Authentic Nigerian Exports</title>
+    <meta name="description" content="Browse our marketplace of verified Nigerian producers. Filter by category, price, and MOQ. Source agricultural goods, fashion, and more securely.">
+    
+    <!-- PWA & Favicon -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#001f3f">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+    
+    <!-- OG & Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Marketplace | Kavex — Source Authentic Nigerian Exports">
+    <meta property="og:description" content="Browse verified Nigerian producers and products on Kavex.">
+    <meta property="og:image" content="https://kavex.ng/assets/img/og-marketplace.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/marketplace.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="container nav-container">
+            <a href="/" class="logo" aria-label="Kavex Home"><span>Kav</span><span>ex</span></a>
+            <div class="nav-links">
+                <a href="/pages/marketplace/products.html" class="active">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html">Submit RFQ</a>
+                <div id="auth-links" class="nav-auth">
+                    <a href="/pages/auth/login.html" class="btn btn-ghost">Sign In</a>
+                    <a href="/pages/auth/register-buyer.html" class="btn btn-primary">Join Free</a>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container marketplace-main" id="main-content">
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar" id="filters-sidebar" aria-labelledby="filter-heading">
+            <h2 id="filter-heading" class="sr-only">Product Filters</h2>
+            <form id="filter-form">
+                <div class="filter-group">
+                    <div class="filter-title">Search</div>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search products...">
+                        <button type="button" class="btn-search" id="search-btn" aria-label="Search">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">Categories</div>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Agriculture & Food"> Agriculture & Food
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Textiles & Fashion"> Textiles & Fashion
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Electronics"> Electronics
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Industrial & Manufacturing"> Industrial
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Beauty & Wellness"> Beauty & Wellness
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="category" value="Raw Materials"> Raw Materials
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">Price Range (NGN)</div>
+                    <div class="price-inputs">
+                        <input type="number" id="min-price" placeholder="Min">
+                        <span>-</span>
+                        <input type="number" id="max-price" placeholder="Max">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">Minimum Order (MOQ)</div>
+                    <select id="moq-select" class="select-filter" aria-label="Filter by minimum order quantity">
+                        <option value="Any">Any Quantity</option>
+                        <option value="10+">10+ units</option>
+                        <option value="50+">50+ units</option>
+                        <option value="100+">100+ units</option>
+                        <option value="500+">500+ units</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-title">Seller Location</div>
+                    <div class="overflow-y-scroll">
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Lagos"> Lagos</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Abuja"> Abuja</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Kano"> Kano</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Oyo"> Oyo</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Ondo"> Ondo</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Niger"> Niger</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Imo"> Imo</label>
+                        <label class="checkbox-item"><input type="checkbox" name="location" value="Benue"> Benue</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="toggle-item">
+                        <span>Verified Sellers Only</span>
+                        <span class="switch">
+                            <input type="checkbox" id="verified-only">
+                            <span class="slider"></span>
+                        </span>
+                    </label>
+                </div>
+
+                <button type="button" class="btn btn-primary w-full" id="apply-filters-btn">Apply Filters</button>
+                <div class="text-center mt-1">
+                    <a href="#" id="reset-filters" class="fs-sm text-muted">Reset all filters</a>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Main Marketplace Content -->
+        <section class="marketplace-content">
+            <div class="results-header">
+                <div class="results-count" id="results-count">Showing 12 products</div>
+                <div class="header-actions">
+                    <div class="sort-box">
+                        <span class="fs-xs text-muted">Sort by:</span>
+                        <select id="sort-select" class="sort-select" aria-label="Sort products">
+                            <option value="relevance">Relevance</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest</option>
+                            <option value="most-ordered">Most Ordered</option>
+                        </select>
+                    </div>
+                    <div class="view-toggles">
+                        <button class="view-btn active" id="grid-view-btn" title="Grid View">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        </button>
+                        <button class="view-btn" id="list-view-btn" title="List View">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <!-- Products dynamically loaded by marketplace.js -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-btn prev">Previous</a>
+                <a href="#" class="page-btn active">1</a>
+                <a href="#" class="page-btn">2</a>
+                <a href="#" class="page-btn">3</a>
+                <span>...</span>
+                <a href="#" class="page-btn next">Next</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Placeholder for global injection) -->
+    <footer class="mt-5 bt-1 py-3">
+        <div class="container text-center text-muted">
+            <p>&copy; 2026 Kavex Technologies. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/marketplace.js"></script>
+</body>
+</html>

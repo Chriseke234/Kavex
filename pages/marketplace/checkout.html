@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — Kavex</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <script src="/assets/js/env-inject.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <style>
+        .checkout-grid { display: grid; grid-template-columns: 1fr 400px; gap: 2rem; align-items: start; }
+        .payment-panel { position: sticky; top: 2rem; }
+        .escrow-trust-card { border: 1px solid var(--navy); background: #f0f7ff; padding: 1.5rem; border-radius: 12px; }
+        .line-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #eee; }
+        .delivery-option { cursor: pointer; border: 1px solid #eee; padding: 1rem; border-radius: 8px; transition: 0.2s; }
+        .delivery-option:hover, .delivery-option.active { border-color: var(--orange); background: #fffaf5; }
+        @media (max-width: 900px) { .checkout-grid { grid-template-columns: 1fr; } .payment-panel { position: static; } }
+    </style>
+</head>
+<body class="bg-gray">
+
+    <!-- Simple Nav -->
+    <nav class="p-1-5 bg-white border-bottom flex justify-between items-center">
+        <a href="/" class="logo"><span>Kav</span><span>ex</span></a>
+        <div class="fs-sm text-muted">Secure Checkout</div>
+    </nav>
+
+    <main class="container py-3">
+        <div class="checkout-grid">
+            <!-- Left: Order & Delivery -->
+            <div class="flex flex-column gap-2">
+                
+                <!-- Order Summary Card -->
+                <div class="card p-2">
+                    <div class="flex justify-between items-center mb-1-5">
+                        <h2 class="fs-xl">Order Summary</h2>
+                        <select id="currency-selector" class="btn btn-ghost btn-xs">
+                            <option value="NGN">NGN (₦)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="GBP">GBP (£)</option>
+                        </select>
+                    </div>
+
+                    <div id="line-items-container">
+                        <!-- Line items populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Delivery Details Card -->
+                <div class="card p-2">
+                    <h2 class="fs-xl mb-1-5">Delivery Details</h2>
+                    <form id="delivery-form" class="flex flex-column gap-1-5">
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="buyer-name" required placeholder="Pre-filling...">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="buyer-phone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Shipping Address</label>
+                            <textarea id="buyer-address" rows="3" required></textarea>
+                        </div>
+
+                        <h3 class="fs-md mt-1">Shipping Method</h3>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div class="delivery-option active" data-cost="2500" data-label="Standard Road">
+                                <div class="fw-bold">Standard Road</div>
+                                <div class="fs-xs text-muted">5-10 Days</div>
+                                <div class="fs-sm mt-0-5 fw-bold">₦2,500</div>
+                            </div>
+                            <div class="delivery-option" data-cost="8000" data-label="Express">
+                                <div class="fw-bold">Express</div>
+                                <div class="fs-xs text-muted">2-3 Days</div>
+                                <div class="fs-sm mt-0-5 fw-bold">₦8,000</div>
+                            </div>
+                            <div class="delivery-option" data-cost="25000" data-label="Air Freight">
+                                <div class="fw-bold">Air Freight</div>
+                                <div class="fs-xs text-muted">1-2 Days</div>
+                                <div class="fs-sm mt-0-5 fw-bold">₦25,000</div>
+                            </div>
+                            <div class="delivery-option" data-cost="0" data-label="Self Pickup">
+                                <div class="fw-bold">Self Pickup</div>
+                                <div class="fs-xs text-muted">Lagos Warehouse</div>
+                                <div class="fs-sm mt-0-5 fw-bold">Free</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: Payment Panel -->
+            <div class="payment-panel">
+                <div class="card p-2">
+                    <h2 class="fs-xl mb-1-5">Payment</h2>
+                    
+                    <div class="escrow-trust-card mb-2">
+                        <div class="fw-bold mb-0-5 text-navy">🛡️ Escrow Protected</div>
+                        <ol class="fs-xs text-muted flex flex-column gap-0-5 pl-1">
+                            <li>You pay → funds held by Kavex</li>
+                            <li>Seller ships your order</li>
+                            <li>You confirm receipt and quality</li>
+                            <li>Seller receives payment</li>
+                        </ol>
+                    </div>
+
+                    <div class="flex flex-column gap-1 mb-2">
+                        <div class="flex justify-between fs-sm">
+                            <span class="text-muted">Subtotal</span>
+                            <span id="summary-subtotal">₦0.00</span>
+                        </div>
+                        <div class="flex justify-between fs-sm">
+                            <span class="text-muted">Shipping</span>
+                            <span id="summary-shipping">₦2,500.00</span>
+                        </div>
+                        <div class="flex justify-between fs-sm">
+                            <span class="text-muted">Platform Fee (2.5%)</span>
+                            <span id="summary-fee">₦0.00</span>
+                        </div>
+                        <hr>
+                        <div class="flex justify-between fs-lg fw-bold">
+                            <span>Total</span>
+                            <span id="summary-total" class="text-orange">₦0.00</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-full py-1 fs-md" id="pay-btn">Pay Securely</button>
+                    
+                    <div class="flex justify-center gap-1 mt-2 filter-invert">
+                        <img src="https://dashboard.flutterwave.com/static/media/logo-colored.f9748b61.svg" height="20" alt="Flutterwave">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal items-center justify-center p-2" id="success-modal">
+        <div class="card p-3 text-center" style="max-width: 500px;">
+            <div class="fs-3xl mb-1">🎉</div>
+            <h2 class="fs-2xl mb-1">Payment Successful!</h2>
+            <p class="text-muted fs-sm mb-1-5">Your payment is now secured in **Kavex Escrow**. The seller has been notified to begin fulfillment.</p>
+            <div class="bg-gray p-1-5 rounded mb-2">
+                <div class="fs-xs text-muted uppercase">Order Reference</div>
+                <div class="fs-xl fw-bold" id="order-ref-display">#KVX-77281</div>
+            </div>
+            <div class="flex gap-1">
+                <a href="/pages/buyer/dashboard.html" class="btn btn-primary w-full">Track Order</a>
+                <a href="/" class="btn btn-ghost w-full">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/flutterwave.js"></script>
+    <script src="../../assets/js/checkout.js"></script>
+</body>
+</html>

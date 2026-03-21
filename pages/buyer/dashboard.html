@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard — Kavex</title>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/env-inject.js"></script>
+</head>
+<body class="dashboard-body">
+
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="/" class="logo" style="color: white;"><span>Kav</span><span>ex</span></a>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="overview">
+                    <span>🏠</span> Overview
+                </div>
+                <div class="nav-item" data-section="orders">
+                    <span>🛒</span> My Orders
+                </div>
+                <div class="nav-item" data-section="rfq">
+                    <span>⚖️</span> RFQ Manager
+                </div>
+                <div class="nav-item" data-section="saved">
+                    <span>🔖</span> Saved Sellers
+                </div>
+                <div class="nav-item" data-section="invoices">
+                    <span>📄</span> Invoices
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <span>⚙️</span> Account Settings
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="#" class="fs-sm text-muted">Need help?</a>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar-dash">
+                    <input type="text" placeholder="Search products, orders, sellers...">
+                </div>
+
+                <div class="top-bar-actions">
+                    <div class="notification-bell">
+                        <span>🔔</span>
+                        <div class="unread-badge">2</div>
+                    </div>
+                    <div class="user-profile-drop flex items-center gap-0-5 pointer">
+                        <span class="fs-sm fw-bold" id="topbar-user-name">...</span>
+                        <span>▼</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTION: OVERVIEW -->
+            <div id="overview-section" class="section-container active">
+                <h1 class="mb-2">Welcome back!</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Orders</div>
+                        <div class="stat-value" id="stat-total-orders">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Spent</div>
+                        <div class="stat-value" id="stat-total-spent">₦0.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active RFQs</div>
+                        <div class="stat-value" id="stat-active-rfqs">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Saved Sellers</div>
+                        <div class="stat-value" id="stat-saved-sellers">0</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 mt-2">
+                    <div class="card p-2">
+                        <h3 class="mb-1">Recent Orders</h3>
+                        <div id="recent-orders-list" class="flex flex-column gap-1">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    <div class="card p-2">
+                        <h3 class="mb-1">Recommended for You</h3>
+                        <div id="recommended-products" class="grid grid-cols-2 gap-1">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: MY ORDERS -->
+            <div id="orders-section" class="section-container">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>My Orders</h1>
+                    <div class="flex gap-0-5">
+                        <button class="btn btn-ghost btn-xs active">All</button>
+                        <button class="btn btn-ghost btn-xs">In Escrow</button>
+                        <button class="btn btn-ghost btn-xs">Shipped</button>
+                    </div>
+                </div>
+                <div id="orders-grid" class="flex flex-column gap-1-5">
+                    <!-- Populated by JS (Order Cards) -->
+                </div>
+            </div>
+
+            <!-- SECTION: RFQ MANAGER -->
+            <div id="rfq-section" class="section-container">
+                <div class="flex justify-between items-center mb-2">
+                    <h1>RFQ Manager</h1>
+                    <button class="btn btn-primary" onclick="openRFQPanel()">+ Create New RFQ</button>
+                </div>
+                <div class="dash-table-container">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Ref #</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Responses</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rfq-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: SAVED SELLERS -->
+            <div id="saved-section" class="section-container">
+                <h1 class="mb-2">Saved Sellers</h1>
+                <div id="saved-sellers-grid" class="grid grid-cols-3 gap-1-5">
+                </div>
+            </div>
+
+            <!-- SECTION: INVOICES -->
+            <div id="invoices-section" class="section-container">
+                <h1 class="mb-2">Invoices</h1>
+                <div class="dash-table-container">
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Order Ref</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Seller</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoices-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION: SETTINGS -->
+            <div id="settings-section" class="section-container">
+                <h1>Settings</h1>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- RFQ Create Panel (Slide-over) -->
+    <div class="slide-over" id="rfq-panel">
+        <div class="slide-over-header">
+            <h2>Create New RFQ</h2>
+            <button onclick="closeRFQPanel()" class="pointer">✕</button>
+        </div>
+        <div class="slide-over-body">
+            <form id="rfq-form">
+                <div class="form-group">
+                    <label>Product Needed</label>
+                    <input type="text" name="product_name" placeholder="e.g. 5000 units of Raw Cashew Nuts" required>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <select name="unit">
+                            <option>Units</option>
+                            <option>kg</option>
+                            <option>MT (Metric Tons)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Target Price (Optional, ₦)</label>
+                    <input type="number" name="target_price">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Deadline</label>
+                    <input type="date" name="deadline" required>
+                </div>
+                <div class="form-group">
+                    <label>Additional Requirements</label>
+                    <textarea name="requirements" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-full">Broadcast RFQ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Receipt Modal -->
+    <div class="modal" id="confirm-modal" style="display: none;">
+        <div class="modal-content card p-2" style="max-width: 450px;">
+            <h3>Confirm Receipt</h3>
+            <p class="fs-sm text-muted mb-1 mt-0-5">Confirming releases the <b>escrow payment</b> to the seller. Only proceed if the goods have been received and verified.</p>
+            
+            <div class="form-group">
+                <label>Quality Rating</label>
+                <div class="rating-input flex gap-0-5 fs-lg">
+                    <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                </div>
+            </div>
+            
+            <div class="flex gap-1 mt-2">
+                <button class="btn btn-ghost w-full" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-primary w-full" id="final-confirm-btn">Release Escrow</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/buyer-dashboard.js"></script>
+</body>
+</html>

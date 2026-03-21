@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Seller — Kavex B2B</title>
+    <script src="/assets/js/env-inject.js"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/seller-wizard.css">
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+        <div class="container nav-container">
+            <a href="/" class="logo" aria-label="Kavex Home">
+                <span>Kav</span><span>ex</span>
+            </a>
+            <div class="nav-actions">
+                <a href="/login" class="fs-sm fw-bold">Already have an account? Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="wizard-container">
+            
+            <div class="text-center mb-1">
+                <h1 class="wizard-title">Join as a Verified Seller</h1>
+                <p class="text-muted">Reach thousands of global buyers from Nigeria.</p>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-container">
+                <div class="progress-bar-bg"></div>
+                <div class="progress-bar-fill" id="progress-fill"></div>
+                <div class="step-marker active" data-step="1">1</div>
+                <div class="step-marker" data-step="2">2</div>
+                <div class="step-marker" data-step="3">3</div>
+                <div class="step-marker" data-step="4">4</div>
+                <div class="step-marker" data-step="5">5</div>
+                <div class="step-marker" data-step="6">6</div>
+            </div>
+
+            <!-- Main Form -->
+            <form id="wizard-form" onsubmit="event.preventDefault(); nextStep();">
+                
+                <!-- STEP 1: ACCOUNT -->
+                <section class="wizard-step active" id="step-1">
+                    <h2 class="mb-1">Step 1: Create Account</h2>
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <div class="input-with-validation">
+                            <input type="text" id="full_name" name="full_name" placeholder="John Doe" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Business Email</label>
+                        <div class="input-with-validation">
+                            <input type="email" id="email" name="email" placeholder="ceo@company.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-with-validation">
+                            <input type="tel" id="phone" name="phone" value="+234" required>
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-with-validation">
+                                <input type="password" id="password" name="password" placeholder="********" required>
+                                <div class="strength-meter"><div class="strength-bar"></div></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <div class="input-with-validation">
+                                <input type="password" id="confirm-password" placeholder="********" required>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 2: BUSINESS INFO -->
+                <section class="wizard-step" id="step-2">
+                    <h2 class="mb-1">Step 2: Business Information</h2>
+                    <div class="form-group">
+                        <label for="business_name">Business Name (as CAC registered)</label>
+                        <input type="text" id="business_name" name="business_name" required>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="business_type">Business Type</label>
+                            <select id="business_type" name="business_type" required>
+                                <option value="">Select Type</option>
+                                <option>Sole Proprietorship</option>
+                                <option>Partnership</option>
+                                <option>LLC</option>
+                                <option>PLC</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="industry">Industry</label>
+                            <select id="industry" name="industry" required>
+                                <option value="">Select Industry</option>
+                                <option>Agriculture</option>
+                                <option>Manufacturing</option>
+                                <option>Fashion</option>
+                                <option>Tech</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="year_established">Year Established</label>
+                            <input type="number" id="year_established" name="year_established" placeholder="e.g. 2015">
+                        </div>
+                        <div class="form-group">
+                            <label for="employees">Employees</label>
+                            <select id="employees" name="employees">
+                                <option>1-10</option>
+                                <option>11-50</option>
+                                <option>51-200</option>
+                                <option>200+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="business-state">State</label>
+                            <select name="business_state" id="business-state" required aria-required="true">
+                                <option value="">Select State</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="business-city">City/LGA</label>
+                            <input type="text" id="business-city" name="business_city" placeholder="e.g. Ikeja" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="business-description">Business Description</label>
+                        <textarea id="business-description" name="description" maxlength="500" placeholder="Tell us about your business..." oninput="updateCharCounter(this.value)"></textarea>
+                        <div id="char-counter" class="fs-xs text-muted text-right">0 / 500</div>
+                    </div>
+                </section>
+
+                <!-- STEP 3: KYB DOCUMENTS -->
+                <section class="wizard-step" id="step-3">
+                    <h2 class="mb-1">Step 3: Verification Documents</h2>
+                    <div class="form-group">
+                        <label for="cac_number">CAC Registration Number</label>
+                        <input type="text" id="cac_number" name="cac_number" placeholder="RC123456" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_cac">CAC Certificate</label>
+                        <div class="upload-zone" onclick="this.querySelector('input').click()">
+                            <div class="upload-icon">📄</div>
+                            <p>Click or drag to upload CAC (PDF/Image)</p>
+                            <input type="file" id="file_cac" name="file_cac" style="display:none" onchange="handleFileUpload(this, 'kyb')">
+                            <div class="file-preview-name fs-sm text-muted"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_id">Director ID (NIN/Passport)</label>
+                        <div class="upload-zone" onclick="this.querySelector('input').click()">
+                            <input type="file" id="file_id" name="file_id" style="display:none" onchange="handleFileUpload(this, 'kyb')">
+                            <p>Director Identity Document</p>
+                            <div class="file-preview-name fs-sm text-muted"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bvn">BVN (Masked Secure Entry)</label>
+                        <input type="password" id="bvn" name="bvn" placeholder="Enter 11-digit BVN" maxlength="11">
+                    </div>
+                </section>
+
+                <!-- STEP 4: BANKING -->
+                <section class="wizard-step" id="step-4">
+                    <h2 class="mb-1">Step 4: Settlement Bank</h2>
+                    <div class="form-group">
+                        <label for="bank-name">Bank Name</label>
+                        <select name="bank_name" id="bank-name" required>
+                            <option value="">Select Bank</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="account_number">Account Number</label>
+                        <input type="text" id="account_number" name="account_number" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="account_name">Account Name (Auto-verified)</label>
+                        <input type="text" id="account_name" name="account_name" value="LOOKUP PENDING..." readonly class="bg-light">
+                    </div>
+                </section>
+
+                <!-- STEP 5: STORE SETUP -->
+                <section class="wizard-step" id="step-5">
+                    <h2 class="mb-1">Step 5: Store Setup</h2>
+                    <div class="form-group">
+                        <label for="store_name">Marketplace Store Name</label>
+                        <input type="text" id="store_name" name="store_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="store-slug">Store URL Slug</label>
+                        <div class="slug-input-wrapper">
+                            <span class="fs-sm text-muted">kavex.com/store/</span>
+                            <input type="text" id="store-slug" name="store_slug" required placeholder="your-store-name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="store_logo">Store Logo</label>
+                        <div class="upload-zone" onclick="this.querySelector('input').click()">
+                            <div class="upload-icon">🖼️</div>
+                            <p>Click to upload logo</p>
+                            <input type="file" id="store_logo" name="file_logo" style="display:none" onchange="handleFileUpload(this, 'store')">
+                            <div class="file-preview-name fs-sm text-muted"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp Business (Optional)</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" value="+234">
+                    </div>
+                </section>
+
+                <!-- STEP 6: REVIEW -->
+                <section class="wizard-step" id="step-6">
+                    <h2 class="mb-1">Step 6: Review & Submit</h2>
+                    <div class="summary-card" id="summary-content">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <label for="terms-agree" class="flex items-center gap-1 mb-1">
+                            <input type="checkbox" id="terms-agree" required>
+                            <span class="fs-sm">I agree to Kavex Terms and Conditions and Escrow Policies.</span>
+                        </label>
+                        <label for="info-accurate" class="flex items-center gap-1">
+                            <input type="checkbox" id="info-accurate" required>
+                            <span class="fs-sm">I confirm that all provided business info is accurate.</span>
+                        </label>
+                    </div>
+                </section>
+
+                <div class="wizard-nav">
+                    <button type="button" class="btn btn-ghost" onclick="prevStep()" id="back-btn">Back</button>
+                    <button type="submit" class="btn btn-primary" id="next-btn">Continue</button>
+                    <button type="button" class="btn btn-primary" id="submit-btn" class="hidden-btn" onclick="submitWizard()">Submit Application</button>
+                </div>
+            </form>
+
+            <!-- Success Screen -->
+            <div id="success-screen" style="display:none; text-align: center; padding: 2rem;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+                <h2 class="mb-1">Application Submitted!</h2>
+                <p class="text-muted mb-1">Status: Under Review (KYB Verification)</p>
+                <p>Reference: KVX-${Math.floor(100000 + Math.random() * 900000)}</p>
+                <p class="mt-1">We will review your documents within 2-3 business days. You'll receive an email shortly.</p>
+                <a href="/" class="btn btn-primary mt-1">Back to Home</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../../assets/js/supabase-client.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/seller-wizard.js"></script>
+    <script>
+        // Override nextStep to handle step 6 submit button swap
+        const originalShowStep = window.showStep;
+        window.showStep = function(n) {
+            originalShowStep(n);
+            const nextBtn = document.querySelector('#next-btn');
+            const submitBtn = document.querySelector('#submit-btn');
+            const backBtn = document.querySelector('#back-btn');
+
+            if (n === 6) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+
+            if (n === 1) backBtn.style.visibility = 'hidden';
+            else backBtn.style.visibility = 'visible';
+        }
+    </script>
+</body>
+</html>

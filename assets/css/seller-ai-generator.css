@@ -1,0 +1,116 @@
+/* AI Listing Grid Layout */
+.ai-listing-grid {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 2rem;
+    align-items: start;
+    height: calc(100vh - 180px);
+}
+
+/* Wizard Panel */
+.ai-wizard-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: white;
+}
+
+.wizard-messages {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: #fcfcfc;
+}
+
+.wizard-header .progress-bar-container {
+    height: 6px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--navy);
+    transition: width 0.4s ease;
+}
+
+/* Bubbles */
+.wizard-msg {
+    max-width: 90%;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.wizard-msg.ai {
+    background: #f0f0f0;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.wizard-msg.user {
+    background: var(--navy);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+/* Preview Panel */
+.ai-preview-panel {
+    position: sticky;
+    top: 2rem;
+}
+
+.preview-img-placeholder {
+    height: 240px;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+}
+
+.placeholder-text {
+    opacity: 0.4;
+}
+
+.quality-tag {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    background: #eee;
+}
+
+/* Animations */
+.loading-steps {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.field-fill-success {
+    border: 1px solid #2ecc71 !important;
+    animation: flashGreen 0.5s ease;
+}
+
+@keyframes flashGreen {
+    0% { background: rgba(46, 204, 113, 0.2); }
+    100% { background: transparent; }
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+    .ai-listing-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+}

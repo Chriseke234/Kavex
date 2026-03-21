@@ -1,0 +1,90 @@
+/* Store Page Styles */
+
+.store-header {
+    height: 320px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3rem;
+    margin-bottom: 2rem;
+}
+
+.store-profile-wrap {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.store-avatar-box {
+    width: 140px;
+    height: 140px;
+    background: white;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -1rem;
+}
+
+.store-avatar-box img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+}
+
+.badge-verified {
+    background: #00d1b2;
+    color: white;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* Layout */
+.store-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+}
+
+.sticky-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+/* Component Overrides */
+.btn-whatsapp {
+    background: #25d366;
+    color: white;
+    border: none;
+}
+.btn-whatsapp:hover {
+    background: #128c7e;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .store-layout {
+        grid-template-columns: 1fr;
+    }
+    .store-profile-wrap {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .store-header {
+        height: auto;
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+    }
+    .store-avatar-box {
+        margin-bottom: 0;
+    }
+}
