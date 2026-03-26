@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buyer Dashboard — Kavex</title>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -107,9 +108,9 @@
                 <div class="flex justify-between items-center mb-2">
                     <h1>My Orders</h1>
                     <div class="flex gap-0-5">
-                        <button class="btn btn-ghost btn-xs active">All</button>
-                        <button class="btn btn-ghost btn-xs">In Escrow</button>
-                        <button class="btn btn-ghost btn-xs">Shipped</button>
+                        <button class="btn-ghost btn-xs active">All</button>
+                        <button class="btn-ghost btn-xs">In Escrow</button>
+                        <button class="btn-ghost btn-xs">Shipped</button>
                     </div>
                 </div>
                 <div id="orders-grid" class="flex flex-column gap-1-5">
@@ -121,7 +122,7 @@
             <div id="rfq-section" class="section-container">
                 <div class="flex justify-between items-center mb-2">
                     <h1>RFQ Manager</h1>
-                    <button class="btn btn-primary" onclick="openRFQPanel()">+ Create New RFQ</button>
+                    <button class="btn-primary" onclick="openRFQPanel()">+ Create New RFQ</button>
                 </div>
                 <div class="dash-table-container">
                     <table class="dash-table">
@@ -214,7 +215,7 @@
                     <label>Additional Requirements</label>
                     <textarea name="requirements" rows="4"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary w-full">Broadcast RFQ</button>
+                <button type="submit" class="btn-primary w-full">Broadcast RFQ</button>
             </form>
         </div>
     </div>
@@ -233,8 +234,8 @@
             </div>
             
             <div class="flex gap-1 mt-2">
-                <button class="btn btn-ghost w-full" onclick="closeConfirmModal()">Cancel</button>
-                <button class="btn btn-primary w-full" id="final-confirm-btn">Release Escrow</button>
+                <button class="btn-ghost w-full" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn-primary w-full" id="final-confirm-btn">Release Escrow</button>
             </div>
         </div>
     </div>

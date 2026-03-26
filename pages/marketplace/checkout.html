@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout — Kavex</title>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/navbar.css">
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <script src="/assets/js/env-inject.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -21,11 +23,43 @@
 </head>
 <body class="bg-gray">
 
-    <!-- Simple Nav -->
-    <nav class="p-1-5 bg-white border-bottom flex justify-between items-center">
-        <a href="/" class="logo"><span>Kav</span><span>ex</span></a>
-        <div class="fs-sm text-muted">Secure Checkout</div>
+    <!-- Navbar -->
+    <nav class="kv-navbar" role="navigation" aria-label="Main Navigation">
+        <div class="kv-navbar__inner">
+            <a href="/" class="kv-navbar__logo" aria-label="Kavex Home">
+                <span class="kv-navbar__logo-kav">Kav</span><span class="kv-navbar__logo-ex">ex</span>
+            </a>
+            <div class="kv-navbar__links">
+                <a href="/pages/marketplace/products.html" class="kv-navbar__link">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html" class="kv-navbar__link">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html" class="kv-navbar__link">Submit RFQ</a>
+            </div>
+            <div class="kv-navbar__actions">
+                <select class="kv-navbar__currency" aria-label="Switch Currency">
+                    <option value="NGN">NGN (₦)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
+                </select>
+                <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+                <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+            </div>
+            <button class="kv-navbar__hamburger" aria-label="Toggle Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
+    <div class="kv-navbar__drawer" aria-label="Mobile Navigation">
+        <ul class="kv-navbar__drawer-links">
+            <li><a href="/pages/marketplace/products.html" class="kv-navbar__drawer-link">Marketplace</a></li>
+            <li><a href="/pages/marketplace/global-buyers.html" class="kv-navbar__drawer-link">Global Buyers</a></li>
+            <li><a href="/pages/marketplace/rfq.html" class="kv-navbar__drawer-link">Submit RFQ</a></li>
+        </ul>
+        <div class="kv-navbar__drawer-actions">
+            <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+            <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+        </div>
+    </div>
 
     <main class="container py-3">
         <div class="checkout-grid">
@@ -36,7 +70,7 @@
                 <div class="card p-2">
                     <div class="flex justify-between items-center mb-1-5">
                         <h2 class="fs-xl">Order Summary</h2>
-                        <select id="currency-selector" class="btn btn-ghost btn-xs">
+                        <select id="currency-selector" class="btn-ghost btn-xs">
                             <option value="NGN">NGN (₦)</option>
                             <option value="USD">USD ($)</option>
                             <option value="EUR">EUR (€)</option>
@@ -130,7 +164,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary w-full py-1 fs-md" id="pay-btn">Pay Securely</button>
+                    <button class="btn-primary w-full py-1 fs-md" id="pay-btn">Pay Securely</button>
                     
                     <div class="flex justify-center gap-1 mt-2 filter-invert">
                         <img src="https://dashboard.flutterwave.com/static/media/logo-colored.f9748b61.svg" height="20" alt="Flutterwave">
@@ -151,12 +185,13 @@
                 <div class="fs-xl fw-bold" id="order-ref-display">#KVX-77281</div>
             </div>
             <div class="flex gap-1">
-                <a href="/pages/buyer/dashboard.html" class="btn btn-primary w-full">Track Order</a>
-                <a href="/" class="btn btn-ghost w-full">Continue Shopping</a>
+                <a href="/pages/buyer/dashboard.html" class="btn-primary w-full">Track Order</a>
+                <a href="/" class="btn-ghost w-full">Continue Shopping</a>
             </div>
         </div>
     </div>
 
+    <script src="../../assets/js/navbar.js"></script>
     <script src="../../assets/js/supabase-client.js"></script>
     <script src="../../assets/js/auth.js"></script>
     <script src="../../assets/js/flutterwave.js"></script>

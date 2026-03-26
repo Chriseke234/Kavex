@@ -90,20 +90,37 @@ function initBuyerWizard() {
 
 function showStep(n) {
     document.querySelectorAll('.wizard-step').forEach(step => step.classList.remove('active'));
-    document.querySelector(`#step-${n}`).classList.add('active');
+    const targetStep = document.querySelector(`#step-${n}`);
+    if (targetStep) targetStep.classList.add('active');
     
     // Update labels and progress
-    document.querySelectorAll('.step-marker').forEach((marker, idx) => {
+    document.querySelectorAll('.auth-step-label').forEach((marker, idx) => {
         marker.classList.remove('active', 'completed');
         if (idx + 1 < n) marker.classList.add('completed');
         if (idx + 1 === n) marker.classList.add('active');
     });
 
-    const progress = ((n - 1) / (totalSteps - 1)) * 100;
-    document.querySelector('.progress-bar-fill').style.width = `${progress}%`;
+    const progress = (n / totalSteps) * 100;
+    const fill = document.querySelector('.auth-progress-fill');
+    if (fill) fill.style.width = `${progress}%`;
 
     currentStep = n;
     window.scrollTo(0, 0);
+
+    // Toggle nav buttons
+    const backBtn = document.querySelector('#back-btn');
+    const nextBtn = document.querySelector('#next-btn');
+    const submitBtn = document.querySelector('#submit-btn');
+
+    if (backBtn) backBtn.style.visibility = n > 1 ? 'visible' : 'hidden';
+    
+    if (n === totalSteps) {
+        if (nextBtn) nextBtn.style.display = 'none';
+        if (submitBtn) submitBtn.style.display = 'block';
+    } else {
+        if (nextBtn) nextBtn.style.display = 'block';
+        if (submitBtn) submitBtn.style.display = 'none';
+    }
 }
 
 function nextStep() {

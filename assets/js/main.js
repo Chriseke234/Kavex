@@ -10,12 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
  * Currency Switcher Logic
  */
 async function initCurrencySwitcher() {
-    const currencySelect = document.querySelector('#currency-select');
+    const currencySelect = document.querySelector('.kv-navbar__currency');
     if (!currencySelect) return;
 
-    // Initial load
-    updatePrices(currencySelect.value);
+    // Initial load from localStorage via navbar preference
+    const savedCurrency = localStorage.getItem('kavex-currency') || 'NGN';
+    updatePrices(savedCurrency);
 
+    // Listen for the custom event dispatched by navbar.js
+    window.addEventListener('kavex:currency-change', (e) => {
+        updatePrices(e.detail.currency);
+    });
+
+    // Also handle direct changes if needed (guard for various implementations)
     currencySelect.addEventListener('change', (e) => {
         updatePrices(e.target.value);
     });

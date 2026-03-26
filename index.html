@@ -8,6 +8,7 @@
     
     <!-- PWA & Favicon -->
     <script src="/assets/js/env-inject.js"></script>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#001f3f">
     <link rel="icon" type="image/svg+xml" href="/assets/img/logo.svg">
@@ -50,11 +51,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/ai-chat.css">
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="stylesheet" href="assets/css/ai-chat.css">
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -63,70 +60,103 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navbar -->
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
-        <div class="container nav-container">
-            <a href="/" class="logo" aria-label="Kavex Home">
-                <img src="/assets/img/logo.svg" alt="Kavex Logo" width="120" height="40">
+    <nav class="kv-navbar" role="navigation" aria-label="Main Navigation">
+        <div class="kv-navbar__inner">
+            <a href="/" class="kv-navbar__logo" aria-label="Kavex Home">
+                <span class="kv-navbar__logo-kav">Kav</span><span class="kv-navbar__logo-ex">ex</span>
             </a>
-            <div class="nav-links">
-                <a href="/pages/marketplace/products.html">Marketplace</a>
-                <a href="/pages/marketplace/global-buyers.html">Global Buyers</a>
-                <a href="/pages/marketplace/rfq.html">Submit RFQ</a>
-                <div id="auth-links" class="nav-auth">
-                    <a href="/pages/auth/login.html" class="btn btn-ghost">Sign In</a>
-                    <a href="/pages/auth/register-buyer.html" class="btn btn-primary">Join Free</a>
-                </div>
+
+            <div class="kv-navbar__links">
+                <a href="/pages/marketplace/products.html" class="kv-navbar__link">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html" class="kv-navbar__link">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html" class="kv-navbar__link">Submit RFQ</a>
             </div>
-            
-            <div class="nav-actions">
-                <select id="currency-select" class="currency-select" aria-label="Switch Currency">
+
+            <div class="kv-navbar__actions">
+                <select class="kv-navbar__currency" aria-label="Switch Currency">
                     <option value="NGN">NGN (₦)</option>
                     <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
                 </select>
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+                <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
             </div>
+
+            <button class="kv-navbar__hamburger" aria-label="Toggle Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
+    <!-- Mobile Drawer -->
+    <div class="kv-navbar__drawer" aria-label="Mobile Navigation">
+        <ul class="kv-navbar__drawer-links">
+            <li><a href="/pages/marketplace/products.html" class="kv-navbar__drawer-link">Marketplace</a></li>
+            <li><a href="/pages/marketplace/global-buyers.html" class="kv-navbar__drawer-link">Global Buyers</a></li>
+            <li><a href="/pages/marketplace/rfq.html" class="kv-navbar__drawer-link">Submit RFQ</a></li>
+        </ul>
+        <div class="kv-navbar__drawer-actions">
+            <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+            <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+        </div>
+    </div>
+
     <main>
         <!-- Hero Section -->
-        <section class="hero">
+        <section class="hero section">
             <div class="container">
-                <h1>Africa's Trusted <br> B2B Marketplace</h1>
-                <p>Connect with KYB-verified Nigerian suppliers. Buy in bulk. Sell globally. Every transaction escrow-protected.</p>
-                
-                <div class="hero-btns">
-                    <a href="/pages/marketplace/products.html" class="btn btn-white">Start Buying</a>
-                    <a href="/pages/auth/seller-register.html" class="btn btn-primary">Become a Seller</a>
+                <!-- Left Side -->
+                <div class="hero-content">
+                    <div class="hero-pill">🔥 Africa's #1 B2B Marketplace</div>
+                    <h1>Source Verified African Suppliers. Trade with Confidence.</h1>
+                    <p>KYB-verified Nigerian businesses. Escrow-protected payments. AI-powered sourcing. 15,000+ products.</p>
+                    
+                    <div class="hero-btns">
+                        <a href="/pages/marketplace/products.html" class="btn-primary btn-lg">Start Buying</a>
+                        <a href="/pages/auth/seller-register.html" class="btn-secondary btn-lg">Become a Seller</a>
+                    </div>
+
+                    <div class="hero-trust-bar">
+                        <div class="trust-stat">
+                            <strong>2,400+</strong>
+                            <span>Verified Sellers</span>
+                        </div>
+                        <div class="trust-stat">
+                            <strong>15,000+</strong>
+                            <span>Products</span>
+                        </div>
+                        <div class="trust-stat">
+                            <strong>30+</strong>
+                            <span>Countries</span>
+                        </div>
+                        <div class="trust-stat">
+                            <strong>100%</strong>
+                            <span>Escrow Safe</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hero-trust-bar">
-                    <div class="trust-pill">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
-                        2,400+ Verified Sellers
-                    </div>
-                    <div class="trust-pill">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
-                        15,000+ Products
-                    </div>
-                    <div class="trust-pill">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
-                        30+ Countries
-                    </div>
-                    <div class="trust-pill">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
-                        Escrow Protected
+                <!-- Right Side (Animated Mockup) -->
+                <div class="hero-mockup">
+                    <div class="hero-card-base hero-card-layer-1"></div>
+                    <div class="hero-card-base hero-card-layer-2"></div>
+                    <div class="hero-card-main">
+                        <img src="/assets/img/premium_sesame_export_1774488572399.png" alt="Premium Sesame Seeds" class="mockup-img">
+                        <div class="mockup-title">Premium Sesame Seeds — Grade A Export</div>
+                        <div class="mockup-price">From ₦750,000 / tonne</div>
+                        <div class="mockup-badges">
+                            <span class="mbadge mbadge-moq">MOQ: 5 Tonnes</span>
+                            <span class="mbadge mbadge-ver">✓ Verified KYC/B</span>
+                        </div>
+                        <a href="/pages/marketplace/rfq.html" class="mockup-btn">Request Quote</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- How It Works -->
-        <section id="how-it-works" class="how-it-works">
+        <section id="how-it-works" class="how-it-works section">
             <div class="container">
                 <h2>How Kavex works</h2>
                 <div class="how-grid">
@@ -171,51 +201,78 @@
         </section>
 
         <!-- Product Categories -->
-        <section id="marketplace" class="categories">
+        <section id="marketplace" class="categories section">
             <div class="container">
                 <h2>Browse by category</h2>
                 <div class="categories-grid">
-                    <a href="/category/agriculture" class="cat-card">
-                        <div class="cat-icon">🌾</div>
-                        <h3>Agriculture & Food</h3>
+                    <a href="/category/agriculture" class="cat-card" data-cat="agriculture">
+                        <div class="cat-icon-wrapper">🌾</div>
+                        <h3 class="cat-title">Agriculture & Food</h3>
                         <p class="cat-count">4,200+ products</p>
-                        <p class="cat-price">From <span class="price-display" data-price-ngn="15000">₦15,000</span> / ton</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">From <span class="price-display" data-price-ngn="15000">₦15,000</span> / ton</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
-                    <a href="/category/textiles" class="cat-card">
-                        <div class="cat-icon">👔</div>
-                        <h3>Textiles & Fashion</h3>
+                    
+                    <a href="/category/textiles" class="cat-card" data-cat="textiles">
+                        <div class="cat-icon-wrapper">👔</div>
+                        <h3 class="cat-title">Textiles & Fashion</h3>
                         <p class="cat-count">2,800+ products</p>
-                        <p class="cat-price">From <span class="price-display" data-price-ngn="2500">₦2,500</span> / yard</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">From <span class="price-display" data-price-ngn="2500">₦2,500</span> / yard</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
-                    <a href="/category/electronics" class="cat-card">
-                        <div class="cat-icon">💻</div>
-                        <h3>Electronics</h3>
+
+                    <a href="/category/electronics" class="cat-card" data-cat="electronics">
+                        <div class="cat-icon-wrapper">💻</div>
+                        <h3 class="cat-title">Electronics</h3>
                         <p class="cat-count">1,500+ products</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">Browse category</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
-                    <a href="/category/industrial" class="cat-card">
-                        <div class="cat-icon">🏗️</div>
-                        <h3>Industrial & Manufacturing</h3>
+
+                    <a href="/category/industrial" class="cat-card" data-cat="industrial">
+                        <div class="cat-icon-wrapper">🏗️</div>
+                        <h3 class="cat-title">Industrial & Mfg.</h3>
                         <p class="cat-count">3,100+ products</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">Browse category</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
-                    <a href="/category/beauty" class="cat-card">
-                        <div class="cat-icon">🧴</div>
-                        <h3>Beauty & Wellness</h3>
+
+                    <a href="/category/beauty" class="cat-card" data-cat="beauty">
+                        <div class="cat-icon-wrapper">🧴</div>
+                        <h3 class="cat-title">Beauty & Wellness</h3>
                         <p class="cat-count">1,200+ products</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">Browse category</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
-                    <a href="/category/raw-materials" class="cat-card">
-                        <div class="cat-icon">🪵</div>
-                        <h3>Raw Materials</h3>
+
+                    <a href="/category/raw-materials" class="cat-card" data-cat="raw-materials">
+                        <div class="cat-icon-wrapper">🪵</div>
+                        <h3 class="cat-title">Raw Materials</h3>
                         <p class="cat-count">2,400+ products</p>
+                        <div class="cat-bottom">
+                            <span class="cat-price-start">Browse category</span>
+                            <span class="cat-arrow">→</span>
+                        </div>
                     </a>
                 </div>
                 <div class="browse-btn-container">
-                    <a href="/categories" class="btn btn-outline-navy">Browse All Categories</a>
+                    <a href="/categories" class="btn-outline">Browse All Categories</a>
                 </div>
             </div>
         </section>
 
         <!-- Featured Sellers -->
-        <section class="sellers">
+        <section class="sellers section">
             <div class="container">
                 <h2>Top verified sellers</h2>
                 <div class="sellers-grid">
@@ -230,7 +287,7 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
                             Verified Seller
                         </div>
-                        <a href="/store/olu" class="btn btn-primary btn-store">View Store</a>
+                        <a href="/pages/marketplace/products.html" class="btn-primary btn-store">View Store</a>
                     </div>
                     <!-- Seller 2 -->
                     <div class="seller-card">
@@ -242,7 +299,7 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
                             Verified Seller
                         </div>
-                        <a href="/store/abuja" class="btn btn-primary btn-store">View Store</a>
+                        <a href="/store/abuja" class="btn-primary btn-store">View Store</a>
                     </div>
                     <!-- Seller 3 -->
                     <div class="seller-card">
@@ -254,7 +311,7 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
                             Verified Seller
                         </div>
-                        <a href="/store/kano" class="btn btn-primary btn-store">View Store</a>
+                        <a href="/store/kano" class="btn-primary btn-store">View Store</a>
                     </div>
                     <!-- Seller 4 -->
                     <div class="seller-card">
@@ -266,14 +323,14 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>
                             Verified Seller
                         </div>
-                        <a href="/store/bio" class="btn btn-primary btn-store">View Store</a>
+                        <a href="/store/bio" class="btn-primary btn-store">View Store</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Why Kavex -->
-        <section class="why-kavex">
+        <section class="why-kavex section">
             <div class="container">
                 <div class="why-grid">
                     <div class="why-item">
@@ -301,12 +358,12 @@
         </section>
 
         <!-- CTA Banner -->
-        <section class="cta-banner">
+        <section class="cta-banner section">
             <div class="container">
                 <h2>Ready to grow your business across Africa?</h2>
                 <div class="hero-btns">
-                    <a href="/pages/auth/seller-register.html" class="btn btn-white">Start Selling Free</a>
-                    <a href="/pages/marketplace/products.html" class="btn btn-primary">Browse Suppliers</a>
+                    <a href="/pages/auth/seller-register.html" class="btn-ghost">Start Selling Free</a>
+                    <a href="/pages/marketplace/products.html" class="btn-primary">Browse Suppliers</a>
                 </div>
             </div>
         </section>
@@ -317,7 +374,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="/" class="logo" style="margin-bottom: 2rem;">
+                    <a href="/" class="logo footer-logo-margin">
                         <span>Kav</span><span>ex</span>
                     </a>
                     <p class="text-muted">The African equivalent of Amazon Business. Connecting Nigeria to the world.</p>
@@ -353,7 +410,7 @@
             
             <div class="footer-bottom">
                 <p>&copy; 2026 Kavex Technologies. All rights reserved.</p>
-                <div style="display: flex; gap: 2rem;">
+                <div class="footer-legal-links">
                     <a href="/privacy">Privacy Policy</a>
                     <a href="/terms">Terms of Service</a>
                 </div>
@@ -368,6 +425,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="assets/js/navbar.js"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/ai-chat.js"></script>

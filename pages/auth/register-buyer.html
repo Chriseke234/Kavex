@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join as a Buyer — Kavex B2B</title>
     <script src="/assets/js/env-inject.js"></script>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/auth-pages.css">
     <!-- Supabase SDK -->
@@ -12,186 +13,226 @@
 </head>
 <body class="bg-light">
 
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
-        <div class="container nav-container">
-            <a href="/" class="logo" aria-label="Kavex Home">
-                <span>Kav</span><span>ex</span>
+    <div class="auth-split-layout">
+        <!-- LEFT PANEL -->
+        <div class="auth-left-panel">
+            <a href="/" class="auth-logo" aria-label="Kavex Home">
+                <span class="kav">Kav</span><span class="ex">ex</span>
             </a>
-            <div class="nav-actions">
-                <a href="/login" class="fs-sm fw-bold">Sign In</a>
+            
+            <div class="auth-left-content">
+                <h2 class="auth-headline">Trade with confidence.</h2>
+                <p class="auth-subline">Africa's most trusted B2B marketplace.</p>
+                
+                <div class="auth-trust-list">
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>KYB Verified Sellers</strong> — Every business manually vetted
+                        </div>
+                    </div>
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>Escrow Protection</strong> — Funds released only after you confirm
+                        </div>
+                    </div>
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>AI Trade Assistant</strong> — 24/7 sourcing and support
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-quote">
+                    "Kavex transformed how we source raw materials. The verification process removes all the anxiety from cross-border trade."
+                </div>
+                <div class="auth-quote-attr">— Sarah J., Procurement Director</div>
             </div>
         </div>
-    </nav>
 
-    <div class="container">
-        <div class="wizard-container max-w-700">
-            
-            <div class="text-center mb-1">
-                <h1 class="wizard-title">Create Buyer Account</h1>
-                <p class="text-muted">Source quality products from verified Nigerian suppliers.</p>
-            </div>
-
-            <!-- Progress 3 steps -->
-            <div class="progress-container">
-                <div class="progress-bar-bg"></div>
-                <div class="progress-bar-fill" id="progress-fill"></div>
-                <div class="step-marker active" data-step="1">1</div>
-                <div class="step-marker" data-step="2">2</div>
-                <div class="step-marker" data-step="3">3</div>
-            </div>
-
-            <form id="wizard-form" onsubmit="event.preventDefault(); nextStep();">
+        <!-- RIGHT PANEL -->
+        <div class="auth-right-panel">
+            <div class="auth-form-container wide">
                 
-                <!-- STEP 1: ACCOUNT -->
-                <section class="wizard-step active" id="step-1">
-                    <h2 class="mb-1">Step 1: Account Details</h2>
-                    <div class="form-group">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" name="full_name" placeholder="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Business Email</label>
-                        <input type="email" id="email" name="email" placeholder="john@buyercompany.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <div class="flex gap-0-5">
-                            <select id="dial-code-select" name="dial_code" class="w-140" title="Country Dial Code" aria-label="Country Dial Code">
-                                <!-- Populated by JS -->
-                            </select>
-                            <input type="tel" id="user_phone" name="phone" placeholder="8012345678" class="flex-1" required>
-                        </div>
-                    </div>
-                    <div class="form-grid-2">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required>
-                        </div class="form-group">
-                        <div class="form-group">
-                            <label for="confirm-password">Confirm Password</label>
-                            <input type="password" id="confirm-password" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="country-select">Country of Business</label>
-                        <select id="country-select" name="country" required>
-                            <option value="">Select Country</option>
-                        </select>
-                    </div>
-                </section>
+                <h1 class="auth-title">Create Buyer Account</h1>
+                <p class="auth-desc">Source quality products from verified Nigerian suppliers.</p>
 
-                <!-- STEP 2: BUSINESS PROFILE -->
-                <section class="wizard-step" id="step-2">
-                    <h2 class="mb-1">Step 2: Sourcing Profile</h2>
-                    <div class="form-group">
-                        <label for="business-name">Company/Business Name</label>
-                        <input type="text" id="business-name" name="business_name" required>
+                <!-- Progress 3 steps -->
+                <div class="auth-progress-wrapper" id="auth-progress-wrapper">
+                    <div class="auth-progress-track">
+                        <div class="auth-progress-fill" id="progress-fill"></div>
                     </div>
-                    <div class="form-grid-2">
-                        <div class="form-group">
-                            <label for="industry">Industry</label>
-                            <select id="industry" name="industry" required>
-                                <option value="">Select Industry</option>
-                                <option>Agriculture & Food</option>
-                                <option>Textiles & Apparel</option>
-                                <option>Industrial Hardware</option>
-                                <option>Electronics</option>
-                                <option>Chemicals</option>
-                                <option>Construction</option>
-                                <!-- Map more via JS if needed -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="budget">Annual Purchasing Budget</label>
-                            <select id="budget" name="budget" required>
-                                <option>Under $10k</option>
-                                <option>$10k-$50k</option>
-                                <option>$50k-$200k</option>
-                                <option>$200k+</option>
-                            </select>
-                        </div>
+                    <div class="auth-step-labels" id="step-labels">
+                        <span class="auth-step-label active" data-step="1">Account</span>
+                        <span class="auth-step-label" data-step="2">Business</span>
+                        <span class="auth-step-label" data-step="3">Preferences</span>
                     </div>
-                    <div class="form-group">
-                        <label>Primary Sourcing Categories</label>
-                        <div id="sourcing-categories-grid" class="checkbox-grid">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="website">Company Website (Optional)</label>
-                        <input type="url" id="website" name="website" placeholder="https://example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="source-referral">How did you hear about us?</label>
-                        <select id="source-referral" name="source_referral">
-                            <option>Social Media</option>
-                            <option>Search Engine</option>
-                            <option>Referral</option>
-                            <option>Industry Event</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                </section>
+                </div>
 
-                <!-- STEP 3: PREFERENCES -->
-                <section class="wizard-step" id="step-3">
-                    <h2 class="mb-1">Step 3: Trade Preferences</h2>
+                <form id="wizard-form" onsubmit="event.preventDefault(); nextStep();">
                     
-                    <div class="form-group">
-                        <label>Preferred Payment Methods</label>
-                        <div class="checkbox-grid">
-                            <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Bank Transfer"> <span>Bank Transfer</span></label>
-                            <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Card Payment"> <span>Card Payment</span></label>
-                            <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Wire Transfer"> <span>Wire Transfer</span></label>
+                    <!-- STEP 1: ACCOUNT -->
+                    <section class="wizard-step active section" id="step-1">
+                        <div class="auth-form-group">
+                            <label for="full-name" class="auth-label">Full Name</label>
+                            <input type="text" id="full-name" name="full_name" class="" placeholder="John Doe" required>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Preferred Shipping Methods</label>
-                        <div class="checkbox-grid">
-                            <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Air Freight"> <span>Air Freight</span></label>
-                            <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Sea Freight"> <span>Sea Freight</span></label>
-                            <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Road Transport"> <span>Road Transport</span></label>
-                            <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Express Courier"> <span>Express Courier</span></label>
+                        <div class="auth-form-group">
+                            <label for="email" class="auth-label">Business Email</label>
+                            <input type="email" id="email" name="email" class="" placeholder="john@buyercompany.com" required>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Notification Toggles</label>
-                        <div class="flex gap-1 flex-wrap">
-                            <label class="flex items-center gap-1 fs-sm"><input type="checkbox" name="notify_email" checked> Email</label>
-                            <label class="flex items-center gap-1 fs-sm"><input type="checkbox" name="notify_sms"> SMS</label>
-                            <label class="flex items-center gap-1 fs-sm"><input type="checkbox" name="notify_whatsapp"> WhatsApp</label>
+                        <div class="auth-form-group">
+                            <label for="phone" class="auth-label">Phone Number</label>
+                            <div class="flex items-center gap-2">
+                                <select id="dial-code-select" name="dial_code" class="auth-input w-xsmall" title="Country Dial Code" aria-label="Country Dial Code">
+                                    <!-- Populated by JS -->
+                                </select>
+                                <input type="tel" id="user_phone" name="phone" placeholder="8012345678" class="auth-input flex-1" required>
+                            </div>
                         </div>
-                    </div>
+                        <div class="auth-form-grid-2">
+                            <div class="auth-form-group">
+                                <label for="password" class="auth-label">Password</label>
+                                <input type="password" id="password" name="password" class="" required>
+                            </div>
+                            <div class="auth-form-group">
+                                <label for="confirm-password" class="auth-label">Confirm Password</label>
+                                <input type="password" id="confirm-password" class="" required>
+                            </div>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="country-select" class="auth-label">Country of Business</label>
+                            <select id="country-select" name="country" class="" required>
+                                <option value="">Select Country</option>
+                            </select>
+                        </div>
+                    </section>
 
-                    <div style="margin-top: 2rem;">
-                        <label class="flex items-center gap-1">
-                            <input type="checkbox" required>
-                            <span class="fs-sm">I agree to the Kavex Terms of Service and Privacy Policy.</span>
-                        </label>
-                    </div>
-                </section>
+                    <!-- STEP 2: BUSINESS PROFILE -->
+                    <section class="wizard-step section" id="step-2">
+                        <div class="auth-form-group">
+                            <label for="business-name" class="auth-label">Company/Business Name</label>
+                            <input type="text" id="business-name" name="business_name" class="" required>
+                        </div>
+                        <div class="auth-form-grid-2">
+                            <div class="auth-form-group">
+                                <label for="industry" class="auth-label">Industry</label>
+                                <select id="industry" name="industry" class="" required>
+                                    <option value="">Select Industry</option>
+                                    <option>Agriculture & Food</option>
+                                    <option>Textiles & Apparel</option>
+                                    <option>Industrial Hardware</option>
+                                    <option>Electronics</option>
+                                    <option>Chemicals</option>
+                                    <option>Construction</option>
+                                    <!-- Map more via JS if needed -->
+                                </select>
+                            </div>
+                            <div class="auth-form-group">
+                                <label for="budget" class="auth-label">Annual Purchasing Budget</label>
+                                <select id="budget" name="budget" class="" required>
+                                    <option>Under $10k</option>
+                                    <option>$10k-$50k</option>
+                                    <option>$50k-$200k</option>
+                                    <option>$200k+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="auth-form-group">
+                            <label class="auth-label">Primary Sourcing Categories</label>
+                            <div id="sourcing-categories-grid" class="checkbox-grid">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="website" class="auth-label">Company Website (Optional)</label>
+                            <input type="url" id="website" name="website" class="" placeholder="https://example.com">
+                        </div>
+                        <div class="auth-form-group">
+                            <label for="source-referral" class="auth-label">How did you hear about us?</label>
+                            <select id="source-referral" name="source_referral" class="">
+                                <option>Social Media</option>
+                                <option>Search Engine</option>
+                                <option>Referral</option>
+                                <option>Industry Event</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </section>
 
-                <!-- Nav -->
-                <div class="wizard-nav">
-                    <button type="button" class="btn btn-ghost" onclick="prevStep()" id="back-btn" style="visibility:hidden">Back</button>
-                    <button type="submit" class="btn btn-primary" id="next-btn">Continue</button>
-                    <button type="button" class="btn btn-primary" id="submit-btn" style="display:none" onclick="submitBuyerWizard()">Complete Registration</button>
+                    <!-- STEP 3: PREFERENCES -->
+                    <section class="wizard-step section" id="step-3">
+                        <div class="auth-form-group">
+                            <label class="auth-label">Preferred Payment Methods</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Bank Transfer"> <span>Bank Transfer</span></label>
+                                <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Card Payment"> <span>Card Payment</span></label>
+                                <label class="checkbox-pill"><input type="checkbox" name="payment_methods" value="Wire Transfer"> <span>Wire Transfer</span></label>
+                            </div>
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label class="auth-label">Preferred Shipping Methods</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Air Freight"> <span>Air Freight</span></label>
+                                <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Sea Freight"> <span>Sea Freight</span></label>
+                                <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Road Transport"> <span>Road Transport</span></label>
+                                <label class="checkbox-pill"><input type="checkbox" name="shipping_methods" value="Express Courier"> <span>Express Courier</span></label>
+                            </div>
+                        </div>
+
+                        <div class="auth-form-group">
+                            <label class="auth-label">Notification Toggles</label>
+                            <div class="flex gap-4 mt-2">
+                                <label class="flex items-center gap-2 fs-sm"><input type="checkbox" name="notify_email" checked> Email</label>
+                                <label class="flex items-center gap-2 fs-sm"><input type="checkbox" name="notify_sms"> SMS</label>
+                                <label class="flex items-center gap-2 fs-sm"><input type="checkbox" name="notify_whatsapp"> WhatsApp</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-8">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" required>
+                                <span class="fs-xs text-muted">I agree to the Kavex Terms of Service and Privacy Policy.</span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Nav -->
+                    <!-- Nav -->
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-ghost btn-full w-50 invisible" onclick="prevStep()" id="back-btn">Back</button>
+                        <button type="submit" class="btn-primary btn-full w-50 m-0" id="next-btn">Continue</button>
+                        <button type="button" class="btn-primary btn-full w-50 m-0 hidden" id="submit-btn" onclick="submitBuyerWizard()">Complete Registration</button>
+                    </div>
+                </form>
+
+                <!-- Success -->
+                <!-- Success -->
+                <div id="success-screen" class="hidden text-center p-8">
+                    <div class="fs-xl mb-4">💼</div>
+                    <h2 class="auth-title">Welcome to Kavex!</h2>
+                    <p class="auth-desc mb-1">Start sourcing from verified Nigerian suppliers.</p>
+                    <div class="flex flex-col gap-4 mt-8">
+                        <a href="/pages/marketplace/products.html" class="btn-primary btn-full no-underline">Browse Marketplace</a>
+                        <a href="/rfq/new" class="btn-ghost btn-full flex items-center justify-center no-underline br-10 h-52">Submit Your First RFQ</a>
+                    </div>
                 </div>
-            </form>
 
-            <!-- Success -->
-            <div id="success-screen" style="display:none; text-align: center; padding: 2rem;">
-                <div style="font-size: 4rem; margin-bottom: 1rem;">💼</div>
-                <h2 class="mb-1">Welcome to Kavex!</h2>
-                <p class="text-muted mb-1">Start sourcing from verified Nigerian suppliers.</p>
-                <div class="flex flex-col gap-1 mt-2">
-                    <a href="/pages/marketplace/products.html" class="btn btn-primary">Browse Marketplace</a>
-                    <a href="/rfq/new" class="btn btn-outline-navy">Submit Your First RFQ</a>
+                <div class="auth-bottom-links">
+                    Already have an account? 
+                    <a href="/pages/auth/login.html">Sign In</a>
                 </div>
+
             </div>
-
         </div>
     </div>
 

@@ -3,11 +3,11 @@
 .breadcrumb {
     padding: 1.5rem 0;
     font-size: 0.9rem;
-    color: var(--text-muted);
+    color: var(--gray-600);
 }
 
 .breadcrumb a {
-    color: var(--primary-black);
+    color: var(--gray-900);
     text-decoration: none;
 }
 
@@ -30,12 +30,12 @@
 
 .main-img-container {
     aspect-ratio: 1/1;
-    background: var(--bg-light);
+    background: var(--gray-50);
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     cursor: zoom-in;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
 }
 
 .main-img-container img {
@@ -62,11 +62,11 @@
     border: 2px solid transparent;
     cursor: pointer;
     overflow: hidden;
-    background: var(--bg-light);
+    background: var(--gray-50);
 }
 
 .thumb.active {
-    border-color: var(--primary-orange);
+    border-color: var(--orange);
 }
 
 .thumb img {
@@ -79,7 +79,7 @@
     text-align: center;
     margin-top: 1rem;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--gray-600);
 }
 
 .gallery-actions {
@@ -99,7 +99,7 @@
     gap: 1rem;
     margin-bottom: 2rem;
     padding: 1rem;
-    background: var(--bg-light);
+    background: var(--gray-50);
     border-radius: 8px;
 }
 
@@ -113,7 +113,7 @@
 
 .short-desc {
     font-size: 1.1rem;
-    color: var(--text-muted);
+    color: var(--gray-600);
     margin-bottom: 2.5rem;
     line-height: 1.6;
 }
@@ -132,19 +132,19 @@
 .pricing-table th {
     text-align: left;
     padding: 1rem;
-    background: var(--bg-light);
+    background: var(--gray-50);
     font-size: 0.9rem;
     text-transform: uppercase;
 }
 
 .pricing-table td {
     padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .pricing-table tr.active-tier {
     background: rgba(10, 10, 10, 0.05);
-    border-left: 4px solid var(--primary-black);
+    border-left: 4px solid var(--gray-900);
 }
 
 .pricing-table tr.active-tier td:first-child {
@@ -161,7 +161,7 @@
 .qty-input-wrapper {
     display: flex;
     align-items: center;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
     border-radius: 6px;
     padding: 0.5rem 1rem;
 }
@@ -175,7 +175,7 @@
 }
 
 .unit-select {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
     border-radius: 6px;
     padding: 0.5rem;
 }
@@ -198,7 +198,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1.5rem 0;
-    border-top: 1px dotted var(--border-color);
+    border-top: 1px dotted var(--gray-200);
 }
 
 .trust-badge {
@@ -206,7 +206,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--gray-600);
 }
 
 /* Tabs System */
@@ -217,7 +217,7 @@
 .tabs-nav {
     display: flex;
     gap: 3rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
     margin-bottom: 2rem;
 }
 
@@ -226,13 +226,13 @@
     background: transparent;
     border: none;
     font-weight: 700;
-    color: var(--text-muted);
+    color: var(--gray-600);
     cursor: pointer;
     position: relative;
 }
 
 .tab-btn.active {
-    color: var(--primary-black);
+    color: var(--gray-900);
 }
 
 .tab-btn.active:after {
@@ -242,7 +242,7 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background: var(--primary-orange);
+    background: var(--orange);
 }
 
 .tab-content { display: none; padding: 1rem 0; }
@@ -255,7 +255,7 @@
 
 .spec-table tr td {
     padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .spec-label { font-weight: 700; width: 200px; }
@@ -274,8 +274,8 @@
 }
 
 .sidebar-card {
-    background: var(--primary-white);
-    border: 1px solid var(--border-color);
+    background: #FFFFFF;
+    border: 1px solid var(--gray-200);
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 2rem;
@@ -286,7 +286,7 @@
 .rfq-mini-form textarea {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
     border-radius: 6px;
     margin-bottom: 1rem;
     font-family: inherit;

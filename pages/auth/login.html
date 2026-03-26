@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In — Kavex B2B</title>
     <script src="/assets/js/env-inject.js"></script>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/auth-pages.css">
     <!-- Supabase SDK -->
@@ -12,81 +13,92 @@
 </head>
 <body class="bg-white">
 
-    <div class="auth-split-container">
-        <!-- Sidebar -->
-        <div class="auth-sidebar">
-            <a href="/" class="logo" aria-label="Kavex Home">
-                <span>Kav</span><span>ex</span>
+    <div class="auth-split-layout">
+        <!-- LEFT PANEL -->
+        <div class="auth-left-panel">
+            <a href="/" class="auth-logo" aria-label="Kavex Home">
+                <span class="kav">Kav</span><span class="ex">ex</span>
             </a>
-            <h2 class="mb-1">Africa's trusted <br> B2B marketplace.</h2>
-            <p class="text-muted">Connecting verified Nigerian suppliers with global trade partners.</p>
+            
+            <div class="auth-left-content">
+                <h2 class="auth-headline">Trade with confidence.</h2>
+                <p class="auth-subline">Africa's most trusted B2B marketplace.</p>
+                
+                <div class="auth-trust-list">
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>KYB Verified Sellers</strong> — Every business manually vetted
+                        </div>
+                    </div>
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>Escrow Protection</strong> — Funds released only after you confirm
+                        </div>
+                    </div>
+                    <div class="auth-trust-item">
+                        <div class="auth-trust-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="auth-trust-text">
+                            <strong>AI Trade Assistant</strong> — 24/7 sourcing and support
+                        </div>
+                    </div>
+                </div>
 
-            <div class="trust-points">
-                <div class="trust-item">
-                    <div class="trust-icon">✓</div>
-                    <div>
-                        <div class="fw-bold">KYB Verified Sellers</div>
-                        <p class="fs-xs">Every business is vetted manually.</p>
-                    </div>
+                <div class="auth-quote">
+                    "Kavex transformed how we source raw materials. The verification process removes all the anxiety from cross-border trade."
                 </div>
-                <div class="trust-item">
-                    <div class="trust-icon">✓</div>
-                    <div>
-                        <div class="fw-bold">Escrow Protected Payments</div>
-                        <p class="fs-xs">Secure trade via Flutterwave.</p>
-                    </div>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">✓</div>
-                    <div>
-                        <div class="fw-bold">24/7 AI Trade Assistant</div>
-                        <p class="fs-xs">Sourcing help whenever you need it.</p>
-                    </div>
-                </div>
+                <div class="auth-quote-attr">— Sarah J., Procurement Director</div>
             </div>
         </div>
 
-        <!-- Content -->
-        <div class="auth-content">
-            <div class="auth-form-wrapper">
-                <h1 class="mb-1">Welcome back</h1>
-                <p class="text-muted mb-2">Please enter your credentials to access your account.</p>
+        <!-- RIGHT PANEL -->
+        <div class="auth-right-panel">
+            <div class="auth-form-container">
+                <h1 class="auth-title">Welcome back</h1>
+                <p class="auth-desc">Sign in to your Kavex account</p>
 
-                <div id="login-error" class="alert-inline error" style="display:none;"></div>
+                <div id="login-error" class="auth-helper-error hidden mb-4"></div>
 
                 <form id="login-form">
-                    <div class="form-group">
-                        <label for="email">Business Email</label>
-                        <input type="email" id="email" name="email" placeholder="ceo@company.com" required>
+                    <div class="auth-form-group">
+                        <label for="email" class="auth-label">Business Email</label>
+                        <input type="email" id="email" name="email" class="auth-input" placeholder="ceo@company.com" required>
                     </div>
-                    <div class="form-group">
-                        <div class="flex justify-between items-center mb-0-5">
-                            <label for="password" class="mb-0">Password</label>
-                            <a href="/pages/auth/forgot-password.html" class="fs-xs fw-bold text-orange">Forgot password?</a>
+
+                    <div class="auth-form-group">
+                        <div class="auth-link-row">
+                            <label for="password" class="auth-label m-0">Password</label>
+                            <a href="/pages/auth/forgot-password.html" class="auth-link">Forgot password?</a>
                         </div>
-                        <div class="input-group-auth">
-                            <input type="password" id="password" name="password" required>
-                            <span class="password-toggle">SHOW</span>
+                        <div class="auth-password-wrapper">
+                            <input type="password" id="password" name="password" class="auth-input" required>
+                            <span class="auth-password-toggle">SHOW</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full mt-1">Sign In</button>
+                    <button type="submit" class="btn-primary btn-full" id="login-submit-btn">Sign In</button>
                 </form>
 
-                <div class="divider">or continue with</div>
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
 
-                <button class="btn-social" onclick="handleGoogleLogin()">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google Logo">
-                    <span>Google Workspace</span>
+                <button class="auth-btn-google" onclick="handleGoogleLogin()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+                    Continue with Google Workspace
                 </button>
 
-                <div class="text-center mt-3">
-                    <p class="fs-sm text-muted">Don't have an account?</p>
-                    <div class="flex gap-1 justify-center mt-1">
-                        <a href="/pages/auth/seller-register.html" class="fs-sm fw-bold text-navy">Sell on Kavex</a>
-                        <span class="text-muted">•</span>
-                        <a href="/pages/auth/register-buyer.html" class="fs-sm fw-bold text-orange">Sign up as Buyer</a>
-                    </div>
+                <div class="auth-bottom-links">
+                    Don't have an account? 
+                    <a href="/pages/auth/seller-register.html">Sell on Kavex</a> • 
+                    <a href="/pages/auth/register-buyer.html">Sign up as Buyer</a>
                 </div>
             </div>
         </div>

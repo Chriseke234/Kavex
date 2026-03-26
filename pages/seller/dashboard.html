@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard — Kavex</title>
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="../../assets/css/seller-ai-generator.css">
@@ -85,7 +86,7 @@
             <div id="overview-section" class="section-container active">
                 <div class="flex justify-between items-center mb-2">
                     <h1>Dashboard Overview</h1>
-                    <button class="btn btn-primary btn-sm">Download Report</button>
+                    <button class="btn-primary btn-sm">Download Report</button>
                 </div>
 
                 <div class="stats-grid">
@@ -121,7 +122,7 @@
             <div id="products-section" class="section-container">
                 <div class="flex justify-between items-center mb-2">
                     <h1>Product Management</h1>
-                    <button class="btn btn-primary" onclick="openProductPanel()">+ Add New Product</button>
+                    <button class="btn-primary" onclick="openProductPanel()">+ Add New Product</button>
                 </div>
                 <div class="dash-table-container">
                     <table class="dash-table">
@@ -149,9 +150,9 @@
                 <div class="flex justify-between items-center mb-2">
                     <h1>Orders</h1>
                     <div class="flex gap-0-5">
-                        <button class="btn btn-ghost btn-xs active">All</button>
-                        <button class="btn btn-ghost btn-xs">Pending</button>
-                        <button class="btn btn-ghost btn-xs">Shipped</button>
+                        <button class="btn-ghost btn-xs active">All</button>
+                        <button class="btn-ghost btn-xs">Pending</button>
+                        <button class="btn-ghost btn-xs">Shipped</button>
                     </div>
                 </div>
                 <div class="dash-table-container">
@@ -177,7 +178,7 @@
             <div id="analytics-section" class="section-container">
                 <div class="flex justify-between items-center mb-2">
                     <h1>Analytics & Insights</h1>
-                    <select class="btn btn-ghost btn-sm" id="analytics-timerange">
+                    <select class="btn-ghost btn-sm" id="analytics-timerange">
                         <option value="30">Last 30 Days</option>
                         <option value="90">Last 90 Days</option>
                     </select>
@@ -223,7 +224,7 @@
                     <div class="stat-card">
                         <div class="stat-label">Available for Payout</div>
                         <div class="stat-value text-orange">₦0.00</div>
-                        <button class="btn btn-primary btn-xs mt-1 w-full">Request Payout</button>
+                        <button class="btn-primary btn-xs mt-1 w-full">Request Payout</button>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">In Escrow</div>
@@ -278,14 +279,14 @@
                         <label>Store Description</label>
                         <textarea name="description" rows="5"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-1">Save Changes</button>
+                    <button type="submit" class="btn-primary mt-1">Save Changes</button>
                 </form>
             </div>
 
             <!-- SECTION: AI LISTING GENERATOR -->
             <div id="ai-listing-section" class="section-container">
                 <div class="flex items-center gap-1 mb-2">
-                    <button class="btn btn-ghost btn-sm" onclick="switchSection('products')">← Back to Products</button>
+                    <button class="btn-ghost btn-sm" onclick="switchSection('products')">← Back to Products</button>
                     <h1>AI Listing Assistant</h1>
                 </div>
 
@@ -308,7 +309,7 @@
                             <div id="wizard-chips" class="flex flex-wrap gap-0-5 mb-1"></div>
                             <div class="flex gap-0-5">
                                 <input type="text" id="wizard-input" class="flex-1" placeholder="Type your answer...">
-                                <button class="btn btn-primary" id="wizard-next-btn">Answer</button>
+                                <button class="btn-primary" id="wizard-next-btn">Answer</button>
                             </div>
                         </div>
                     </div>
@@ -345,7 +346,7 @@
                                 <h4 class="fs-sm mb-1">AI Quality Score Suggestions</h4>
                                 <ul id="quality-suggestions" class="fs-xs text-muted"></ul>
                             </div>
-                            <button class="btn btn-primary w-full" id="publish-ai-product">Publish to Marketplace</button>
+                            <button class="btn-primary w-full" id="publish-ai-product">Publish to Marketplace</button>
                         </div>
                     </div>
                 </div>
@@ -388,8 +389,8 @@
                 <div id="pricing-tiers-container">
                     <!-- Dynamic tiers -->
                 </div>
-                <button type="button" class="btn btn-ghost btn-sm mb-2" onclick="addPricingTier()">+ Add Price Tier</button>
-                <button type="submit" class="btn btn-primary w-full">Save and Publish</button>
+                <button type="button" class="btn-ghost btn-sm mb-2" onclick="addPricingTier()">+ Add Price Tier</button>
+                <button type="submit" class="btn-primary w-full">Save and Publish</button>
             </form>
         </div>
     </div>

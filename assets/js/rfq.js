@@ -18,7 +18,8 @@ let selectedFile = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     initRFQForm();
-    initAutocomplete();
+    initTags();
+    initCharCounter();
     initFileUpload();
     checkAuthStatus();
 });
@@ -28,38 +29,26 @@ function initRFQForm() {
     form.addEventListener('submit', handleRFQSubmit);
 }
 
-function initAutocomplete() {
+function initTags() {
     const input = document.getElementById('commodity-input');
-    const results = document.getElementById('autocomplete-results');
-
-    input.addEventListener('input', () => {
-        const val = input.value.toLowerCase();
-        results.innerHTML = '';
-        if (!val) {
-            results.classList.add('hidden');
-            return;
-        }
-
-        const matches = COMMODITIES.filter(c => c.toLowerCase().includes(val));
-        if (matches.length > 0) {
-            matches.forEach(m => {
-                const item = document.createElement('div');
-                item.className = 'autocomplete-item';
-                item.textContent = m;
-                item.onclick = () => {
-                    input.value = m;
-                    results.classList.add('hidden');
-                };
-                results.appendChild(item);
-            });
-            results.classList.remove('hidden');
-        } else {
-            results.classList.add('hidden');
-        }
+    const tags = document.querySelectorAll('.rfq-tag');
+    
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            input.value = tag.textContent;
+            input.focus();
+        });
     });
+}
 
-    document.addEventListener('click', (e) => {
-        if (!input.contains(e.target)) results.classList.add('hidden');
+function initCharCounter() {
+    const textarea = document.getElementById('description');
+    const counter = document.getElementById('char-counter');
+    if (!textarea || !counter) return;
+
+    textarea.addEventListener('input', () => {
+        const len = textarea.value.length;
+        counter.textContent = `${len} / 1000`;
     });
 }
 
@@ -95,7 +84,7 @@ function handleFile(file) {
         return;
     }
     selectedFile = file;
-    document.querySelector('.file-upload-zone label span').textContent = `Uploaded: ${file.name}`;
+    document.querySelector('.rfq-upload-text').textContent = `Uploaded: ${file.name}`;
 }
 
 async function checkAuthStatus() {
@@ -142,31 +131,31 @@ async function handleRFQSubmit(e) {
         if (!response.ok) throw new Error(result.message || "Submission failed");
 
         // Success
-        showSuccessModal(result.isGuest, result.email);
+        showSuccessState(result.rfqNumber || `KVX-${Math.floor(100000 + Math.random() * 900000)}`, rfqData.category || 'General');
 
     } catch (err) {
         alert("Error: " + err.message);
         btn.disabled = false;
-        btn.textContent = "Submit RFQ to All Verified Sellers";
+        btn.textContent = "Submit RFQ to All Verified Sellers →";
     }
 }
 
-function showSuccessModal(isGuest, email) {
-    const modal = document.getElementById('rfq-success-modal');
-    modal.classList.remove('hidden');
+function showSuccessState(refNumber, category) {
+    const wrapper = document.getElementById('rfq-form-wrapper');
+    const template = document.getElementById('success-template');
     
-    const bridge = document.getElementById('reg-bridge');
-    if (!isGuest) {
-        bridge.innerHTML = `
-            <div class="p-2 bg-teal-light rounded">
-                <p>Welcome back! You can track this RFQ in your buyer dashboard.</p>
-                <a href="/pages/buyer/dashboard.html" class="btn btn-primary w-full mt-1">Go to Dashboard</a>
-            </div>
-        `;
-    } else {
-        // Guest: Complete bridge
-        document.getElementById('complete-reg-btn').onclick = () => completeBridge(email);
-    }
+    if (!wrapper || !template) return;
+
+    // Clear and clone
+    wrapper.innerHTML = '';
+    const clone = template.content.cloneNode(true);
+    
+    // Fill dynamic data
+    clone.querySelector('#success-cat').textContent = category;
+    clone.querySelector('#rfq-ref-number').textContent = refNumber;
+    
+    wrapper.appendChild(clone);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 async function completeBridge(email) {

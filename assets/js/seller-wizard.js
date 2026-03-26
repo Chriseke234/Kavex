@@ -1,14 +1,25 @@
 /**
  * Kavex Seller Registration Wizard Logic
+ * Handles 6-step navigation, real-time validation, and summary rendering.
  */
 
 const NIGERIAN_STATES = ["Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"];
 
-const BANKS = ["Access Bank", "GTBank", "First Bank", "UBA", "Zenith Bank", "Fidelity Bank", "Sterling Bank", "Polaris Bank", "Kuda Bank", "OPay", "PalmPay", "Moniepoint", "Carbon", "VFD Microfinance"];
+const BANKS = ["Access Bank", "Access Bank (Diamond)", "Ecobank Nigeria", "Fidelity Bank", "First Bank of Nigeria", "First City Monument Bank", "Globus Bank", "Guaranty Trust Bank", "Heritage Bank", "Keystone Bank", "Kuda Bank", "Moniepoint MFB", "OPay", "PalmPay", "Parallex Bank", "Polaris Bank", "Providus Bank", "Stanic IBTC Bank", "Standard Chartered", "Sterling Bank", "SunTrust Bank", "Titan Trust Bank", "Union Bank of Nigeria", "United Bank for Africa", "Unity Bank", "Wema Bank", "Zenith Bank"];
 
 let currentStep = 1;
 const totalSteps = 6;
-let wizardData = JSON.parse(localStorage.getItem('kavex_seller_draft')) || {};
+let formData = JSON.parse(localStorage.getItem('kavex_seller_draft')) || {};
+
+// Step UI Metadata
+const stepInfo = {
+    1: { title: "Create Your Account", subtitle: "Start with your basic account details" },
+    2: { title: "Business Information", subtitle: "Tell us about your company" },
+    3: { title: "Verification Documents", subtitle: "Upload your KYB documents — all stored securely" },
+    4: { title: "Settlement Account", subtitle: "Where we send your earnings" },
+    5: { title: "Set Up Your Store", subtitle: "How buyers will find you on Kavex" },
+    6: { title: "Review & Submit", subtitle: "Almost done — review your details" }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     initWizard();
@@ -16,282 +27,333 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initWizard() {
-    // Populate States
-    const stateSelect = document.querySelector('#business-state');
-    if (stateSelect) {
-        NIGERIAN_STATES.forEach(state => {
-            const opt = document.createElement('option');
-            opt.value = state;
-            opt.textContent = state;
-            stateSelect.appendChild(opt);
-        });
-    }
+    // Populate Selects
+    populateSelect('business_state', NIGERIAN_STATES, 'Select State');
+    populateSelect('bank_name', BANKS, 'Select Bank');
 
-    // Populate Banks
-    const bankSelect = document.querySelector('#bank-name');
-    if (bankSelect) {
-        BANKS.forEach(bank => {
-            const opt = document.createElement('option');
-            opt.value = bank;
-            opt.textContent = bank;
-            bankSelect.appendChild(opt);
-        });
-    }
+    // Input Listeners
+    setupInputListeners();
 
-    // Event Listeners for inputs
-    document.querySelectorAll('.wizard-step input, .wizard-step select, .wizard-step textarea').forEach(input => {
-        input.addEventListener('input', (e) => {
-            const { name, value, type, checked } = e.target;
-            if (!name) return; // Skip inputs without names (e.g. confirm password)
-
-            if (type === 'checkbox') {
-                if (!wizardData[name]) wizardData[name] = [];
-                if (checked) wizardData[name].push(value);
-                else wizardData[name] = wizardData[name].filter(v => v !== value);
-            } else {
-                wizardData[name] = value;
-            }
-            saveDraft();
-            
-            // Real-time validations
-            if (name === 'password') updatePasswordStrength(value);
-            if (name === 'store_name') updateStoreSlug(value);
-            if (name === 'description') updateCharCounter(value);
-        });
-    });
+    // Specific Feature Handlers
+    setupRealtimeFeatures();
 
     showStep(currentStep);
 }
 
-function showStep(n) {
-    document.querySelectorAll('.wizard-step').forEach(step => step.classList.remove('active'));
-    document.querySelector(`#step-${n}`).classList.add('active');
+function populateSelect(id, items, placeholder) {
+    const select = document.getElementById(id);
+    if (!select) return;
     
-    // Update markers
-    document.querySelectorAll('.step-marker').forEach((marker, idx) => {
-        marker.classList.remove('active', 'completed');
-        if (idx + 1 < n) marker.classList.add('completed');
-        if (idx + 1 === n) marker.classList.add('active');
+    select.innerHTML = `<option value="">${placeholder}</option>`;
+    items.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
     });
+}
+
+function setupInputListeners() {
+    const inputs = document.querySelectorAll('#wizard-form input, #wizard-form select, #wizard-form textarea');
+    inputs.forEach(input => {
+        input.addEventListener('input', (e) => {
+            const { name, value, type, checked } = e.target;
+            if (!name) return;
+
+            if (type === 'checkbox') {
+                formData[name] = checked;
+            } else {
+                formData[name] = value;
+            }
+            saveDraft();
+            
+            // Check review checkboxes to enable submit
+            if (name === 'agree_terms' || name === 'confirm_authentic') {
+                updateSubmitState();
+            }
+        });
+    });
+}
+
+function setupRealtimeFeatures() {
+    // Password Strength
+    const passInput = document.getElementById('password');
+    if (passInput) {
+        passInput.addEventListener('input', (e) => updatePasswordStrength(e.target.value));
+    }
+
+    // Store Slug
+    const storeNameInput = document.getElementById('store_name');
+    if (storeNameInput) {
+        storeNameInput.addEventListener('input', (e) => generateSlug(e.target.value));
+    }
+
+    // Char Counter
+    const descInput = document.getElementById('description');
+    if (descInput) {
+        descInput.addEventListener('input', (e) => {
+            document.getElementById('char-counter').textContent = `${e.target.value.length} / 500`;
+        });
+    }
+
+    // Masked BVN
+    const bvnInput = document.getElementById('bvn');
+    if (bvnInput) {
+        bvnInput.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            e.target.value = val;
+            formData.bvn = val;
+        });
+    }
+
+    // Account Verification Mock
+    const accNumInput = document.getElementById('account_number');
+    const bankSelect = document.getElementById('bank_name');
+    if (accNumInput && bankSelect) {
+        const triggerVerif = () => {
+            if (accNumInput.value.length === 10 && bankSelect.value) {
+                verifyAccount();
+            }
+        };
+        accNumInput.addEventListener('input', triggerVerif);
+        bankSelect.addEventListener('change', triggerVerif);
+    }
+}
+
+/** Navigation Functions **/
+
+function showStep(n) {
+    // Hide all steps
+    document.querySelectorAll('.wizard-step').forEach(step => step.classList.remove('active'));
+    
+    // Show target step
+    const targetStep = document.getElementById(`step-${n}`);
+    if (targetStep) targetStep.classList.add('active');
+
+    // Update Header
+    document.getElementById('step-counter').textContent = `Step ${n} of 6`;
+    document.getElementById('step-title').textContent = stepInfo[n].title;
+    document.getElementById('step-subtitle').textContent = stepInfo[n].subtitle;
 
     // Update Progress Bar
-    const progress = ((n - 1) / (totalSteps - 1)) * 100;
-    document.querySelector('.progress-bar-fill').style.width = `${progress}%`;
+    const progress = (n / totalSteps) * 100;
+    document.getElementById('progress-fill').style.width = `${progress}%`;
+
+    // Update Dots
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, idx) => {
+        dot.classList.remove('active', 'completed');
+        if (idx + 1 < n) dot.classList.add('completed');
+        if (idx + 1 === n) dot.classList.add('active');
+    });
+
+    // Update Buttons
+    const backBtn = document.getElementById('btn-back');
+    const contBtn = document.getElementById('btn-continue');
+    
+    backBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+    
+    if (n === totalSteps) {
+        contBtn.style.display = 'none';
+        renderSummary();
+    } else {
+        contBtn.style.display = 'block';
+        contBtn.textContent = 'Continue →';
+    }
 
     currentStep = n;
-    window.scrollTo(0, 0);
-
-    if (n === 6) renderSummary();
+    document.getElementById('wizard-right-panel').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function nextStep() {
     if (validateStep(currentStep)) {
-        if (currentStep < totalSteps) showStep(currentStep + 1);
+        if (currentStep < totalSteps) {
+            showStep(currentStep + 1);
+        }
     }
 }
 
 function prevStep() {
-    if (currentStep > 1) showStep(currentStep - 1);
+    if (currentStep > 1) {
+        showStep(currentStep - 1);
+    }
 }
 
 function validateStep(n) {
-    const currentStepEl = document.querySelector(`#step-${n}`);
-    const requiredFields = currentStepEl.querySelectorAll('[required]');
+    const stepEl = document.getElementById(`step-${n}`);
+    const requiredFields = stepEl.querySelectorAll('[required]');
     let isValid = true;
 
     requiredFields.forEach(field => {
         if (!field.value || (field.type === 'checkbox' && !field.checked)) {
-            field.closest('.form-group')?.classList.add('error-state');
+            field.style.borderColor = '#DC2626';
             isValid = false;
         } else {
-            field.closest('.form-group')?.classList.remove('error-state');
+            field.style.borderColor = '';
         }
     });
 
-    if (!isValid) {
-        alert("Please fill in all required fields.");
-        return false;
-    }
+    if (!isValid) return false;
 
-    // Specific Validations
+    // Custom validations
     if (n === 1) {
-        const email = document.querySelector('[name="email"]').value;
-        const pass = document.querySelector('#password').value;
-        const confirm = document.querySelector('#confirm-password').value;
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid business email.");
-            return false;
-        }
-
-        if (pass.length < 8) {
-            alert("Password must be at least 8 characters.");
-            return false;
-        }
-
-        if (pass !== confirm) {
-            alert("Passwords do not match.");
-            return false;
-        }
+        const pass = document.getElementById('password').value;
+        const confirm = document.getElementById('confirm_password').value;
+        if (pass.length < 8) return alert("Password must be at least 8 characters"), false;
+        if (pass !== confirm) return alert("Passwords do not match"), false;
     }
 
     if (n === 3) {
-        const bvn = document.querySelector('#bvn').value;
-        if (bvn && bvn.length !== 11) {
-            alert("BVN must be exactly 11 digits.");
-            return false;
-        }
+        const bvn = document.getElementById('bvn').value;
+        if (bvn && bvn.length !== 11) return alert("BVN must be 11 digits"), false;
     }
 
-    return isValid;
+    return true;
 }
 
-function saveDraft() {
-    localStorage.setItem('kavex_seller_draft', JSON.stringify(wizardData));
-}
+/** Feature Implementations **/
 
-function loadDraft() {
-    Object.entries(wizardData).forEach(([key, value]) => {
-        const input = document.querySelector(`[name="${key}"], #[id="${key}"]`);
-        if (!input) return;
+function updatePasswordStrength(val) {
+    const segments = document.querySelectorAll('.strength-segment');
+    const label = document.getElementById('strength-label');
+    let strength = 0;
 
-        if (input.type === 'checkbox') {
-            input.checked = value === true || (Array.isArray(wizardData[key]) && wizardData[key].includes(input.value));
-        } else if (input.tagName === 'SELECT') {
-            // For selects, we might need a delay if they are populated via JS
-            setTimeout(() => {
-                input.value = value;
-            }, 100);
+    if (val.length >= 8) strength++;
+    if (/[A-Z]/.test(val)) strength++;
+    if (/[0-9]/.test(val)) strength++;
+    if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+    segments.forEach((seg, i) => {
+        if (i < strength) {
+            seg.style.background = strength === 1 ? '#DC2626' : (strength === 2 ? '#F59E0B' : (strength === 3 ? '#EAB308' : '#10B981'));
         } else {
-            input.value = value;
+            seg.style.background = '';
         }
     });
+
+    const labels = ["Weak", "Fair", "Strong", "Very Strong"];
+    label.textContent = val.length > 0 ? labels[strength - 1] || "Weak" : "Password strength";
+}
+
+function generateSlug(name) {
+    const slug = name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+    document.getElementById('store_slug').value = slug;
+    formData.store_slug = slug;
+}
+
+async function verifyAccount() {
+    const input = document.getElementById('account_name');
+    input.value = "Verifying account...";
+    input.classList.add('text-muted');
+
+    // Simulate API delay
+    await new Promise(r => setTimeout(r, 1500));
     
-    // Sync UI elements
-    if (wizardData.password) updatePasswordStrength(wizardData.password);
-    if (wizardData.description) updateCharCounter(wizardData.description);
-}
-
-// Helpers
-function updatePasswordStrength(val) {
-    const bar = document.querySelector('.strength-bar');
-    if (!bar) return;
-    let strength = 0;
-    if (val.length > 5) strength += 25;
-    if (val.match(/[A-Z]/)) strength += 25;
-    if (val.match(/[0-9]/)) strength += 25;
-    if (val.match(/[^A-Za-z0-9]/)) strength += 25;
-    
-    bar.style.width = strength + '%';
-    if (strength < 50) bar.style.background = '#DC2626';
-    else if (strength < 100) bar.style.background = '#F59E0B';
-    else bar.style.background = '#10B981';
-}
-
-function updateStoreSlug(name) {
-    const slugInput = document.querySelector('[name="store_slug"]');
-    if (slugInput) {
-        const slug = name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-        slugInput.value = slug;
-        wizardData.store_slug = slug;
-    }
-}
-
-function updateCharCounter(val) {
-    const counter = document.querySelector('#char-counter');
-    if (counter) counter.textContent = `${val.length} / 500`;
+    input.value = (formData.full_name || "BUSINESS ACCOUNT") + " - VERIFIED";
+    input.classList.remove('text-muted');
+    input.style.color = '#1D9E75';
+    input.style.fontWeight = '600';
 }
 
 function renderSummary() {
-    const container = document.querySelector('#summary-content');
-    if (!container) return;
-
+    const container = document.getElementById('summary-card');
     const sections = [
         {
-            title: "Account & Identity",
-            items: [
-                { label: "Full Name", value: wizardData.full_name },
-                { label: "Business Email", value: wizardData.email },
-                { label: "Phone", value: wizardData.phone }
+            id: 1,
+            title: "Account Details",
+            fields: [
+                { label: "Full Name", value: formData.full_name },
+                { label: "Email", value: formData.email },
+                { label: "Phone", value: formData.phone }
             ]
         },
         {
-            title: "Business Details",
-            items: [
-                { label: "Company", value: wizardData.business_name },
-                { label: "Type", value: wizardData.business_type },
-                { label: "Industry", value: wizardData.industry },
-                { label: "Location", value: `${wizardData.business_city || ''}, ${wizardData.business_state || ''}` },
-                { label: "CAC Reg", value: wizardData.cac_number }
+            id: 2,
+            title: "Business Info",
+            fields: [
+                { label: "Company", value: formData.business_name },
+                { label: "Industry", value: formData.industry },
+                { label: "Location", value: `${formData.business_city}, ${formData.business_state}` }
             ]
         },
         {
-            title: "Storefront Info",
-            items: [
-                { label: "Store Name", value: wizardData.store_name },
-                { label: "Slug", value: wizardData.store_slug }
+            id: 4,
+            title: "Settlement",
+            fields: [
+                { label: "Bank", value: formData.bank_name },
+                { label: "Account", value: formData.account_number }
+            ]
+        },
+        {
+            id: 5,
+            title: "Storefront",
+            fields: [
+                { label: "Store Name", value: formData.store_name },
+                { label: "URL Slug", value: formData.store_slug }
             ]
         }
     ];
 
-    container.innerHTML = sections.map(section => `
+    container.innerHTML = sections.map(s => `
         <div class="summary-section">
-            <h4>${section.title}</h4>
-            <div class="summary-grid">
-                ${section.items.map(item => `
-                    <div class="summary-item">
-                        <label>${item.label}</label>
-                        <span>${item.value || '<span class="text-error">Missing</span>'}</span>
-                    </div>
-                `).join('')}
+            <div class="summary-header">
+                <h4>${s.title}</h4>
+                <a href="#" class="edit-link" onclick="showStep(${s.id}); return false;">Edit</a>
             </div>
+            ${s.fields.map(f => `
+                <div class="summary-row">
+                    <div class="summary-label">${f.label}</div>
+                    <div class="summary-value">${f.value || 'None'}</div>
+                </div>
+            `).join('')}
         </div>
     `).join('');
 }
 
-async function handleFileUpload(input, bucket) {
-    const file = input.files[0];
-    if (!file) return;
-
-    // Show preview logic...
-    const preview = input.parentElement.querySelector('.file-preview-name');
-    if (preview) preview.textContent = file.name;
-
-    // In a real app, you'd upload here if you want it prior to final submit
-    // For now, we'll collect files and upload in submitWizard()
+function updateSubmitState() {
+    const agree = document.getElementById('agree_terms').checked;
+    const confirm = document.getElementById('confirm_authentic').checked;
+    document.getElementById('final-submit-btn').disabled = !(agree && confirm);
 }
 
-async function submitWizard() {
-    const btn = document.querySelector('#submit-btn');
+async function handleFinalSubmit() {
+    const btn = document.getElementById('final-submit-btn');
     btn.disabled = true;
-    btn.textContent = 'Processing...';
+    btn.textContent = "Processing Application...";
 
-    try {
-        // 1. Sign Up
-        const res = await window.kavexAuth.signUpSeller(
-            wizardData.email, 
-            wizardData.password, 
-            wizardData.full_name, 
-            wizardData.business_name, 
-            wizardData.phone
-        );
+    // Mock total submit
+    await new Promise(r => setTimeout(r, 2000));
 
-        if (!res.success) throw new Error(res.error);
+    // Clear draft
+    localStorage.removeItem('kavex_seller_draft');
 
-        // 2. Upload Files (MOCKED for now as we need real files)
-        // const { data, error } = await supabase.storage.from('kyb-documents').upload(path, file);
+    // Show Success
+    document.getElementById('wizard-form').style.display = 'none';
+    document.getElementById('bottom-nav').style.display = 'none';
+    document.getElementById('step-header').style.display = 'none';
+    
+    // Generate random reference
+    const ref = 'KVX-' + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('ref-number').textContent = ref;
+    
+    document.getElementById('success-screen').style.display = 'block';
+}
 
-        // 3. Update Detailed Seller Profiles (Year Est, Employees, Address, Bank, etc.)
-        // This would be another Supabase call update to finish the wizard data
-        
-        localStorage.removeItem('kavex_seller_draft');
-        document.querySelector('#wizard-form').style.display = 'none';
-        document.querySelector('#success-screen').style.display = 'block';
+/** Draft Persistence **/
+function saveDraft() {
+    localStorage.setItem('kavex_seller_draft', JSON.stringify(formData));
+}
 
-    } catch (err) {
-        alert("Submission Failed: " + err.message);
-        btn.disabled = false;
-        btn.textContent = 'Submit Application';
-    }
+function loadDraft() {
+    Object.entries(formData).forEach(([key, value]) => {
+        const el = document.getElementsByName(key)[0] || document.getElementById(key);
+        if (el) {
+            if (el.type === 'checkbox') el.checked = value;
+            else el.value = value;
+        }
+    });
+
+    // Run specific updates
+    if (formData.password) updatePasswordStrength(formData.password);
+    if (formData.description) document.getElementById('char-counter').textContent = `${formData.description.length} / 500`;
 }

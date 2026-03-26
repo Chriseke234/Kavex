@@ -7,6 +7,7 @@
     <meta name="description" content="View verified supplier profiles, browse real-time inventory, and source commodities direct from verified Nigerian producers. Trusted B2B trade.">
     
     <!-- PWA & Favicon -->
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#001f3f">
     <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
@@ -27,6 +28,7 @@
     </script>
 
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/navbar.css">
     <link rel="stylesheet" href="../../assets/css/marketplace.css">
     <link rel="stylesheet" href="../../assets/css/store.css">
 </head>
@@ -34,18 +36,42 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Navbar -->
-    <nav class="navbar border-bottom" role="navigation" aria-label="Store Navigation">
-        <div class="container flex justify-between items-center">
-            <a href="/" class="logo" aria-label="Kavex Home"><span>Kav</span><span>ex</span></a>
-            <div class="search-bar-inline">
-                <input type="text" placeholder="Search in this store..." aria-label="Search within store">
+    <nav class="kv-navbar" role="navigation" aria-label="Main Navigation">
+        <div class="kv-navbar__inner">
+            <a href="/" class="kv-navbar__logo" aria-label="Kavex Home">
+                <span class="kv-navbar__logo-kav">Kav</span><span class="kv-navbar__logo-ex">ex</span>
+            </a>
+            <div class="kv-navbar__links">
+                <a href="/pages/marketplace/products.html" class="kv-navbar__link">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html" class="kv-navbar__link">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html" class="kv-navbar__link">Submit RFQ</a>
             </div>
-            <nav class="nav-links">
-                <a href="/pages/marketplace/products.html">Marketplace</a>
-                <a href="/pages/marketplace/rfq.html">RFQ Center</a>
-            </nav>
+            <div class="kv-navbar__actions">
+                <select class="kv-navbar__currency" aria-label="Switch Currency">
+                    <option value="NGN">NGN (₦)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
+                </select>
+                <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+                <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+            </div>
+            <button class="kv-navbar__hamburger" aria-label="Toggle Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+    <div class="kv-navbar__drawer" aria-label="Mobile Navigation">
+        <ul class="kv-navbar__drawer-links">
+            <li><a href="/pages/marketplace/products.html" class="kv-navbar__drawer-link">Marketplace</a></li>
+            <li><a href="/pages/marketplace/global-buyers.html" class="kv-navbar__drawer-link">Global Buyers</a></li>
+            <li><a href="/pages/marketplace/rfq.html" class="kv-navbar__drawer-link">Submit RFQ</a></li>
+        </ul>
+        <div class="kv-navbar__drawer-actions">
+            <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+            <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+        </div>
+    </div>
 
     <!-- Store Header -->
     <div class="store-header" id="store-header-bg">
@@ -64,8 +90,8 @@
                 </div>
             </div>
             <div class="store-actions">
-                <button class="btn btn-outline-white" id="follow-btn">Follow Store</button>
-                <button class="btn btn-primary" id="contact-btn">Message Seller</button>
+                <button class="btn-outline-white" id="follow-btn">Follow Store</button>
+                <button class="btn-primary" id="contact-btn">Message Seller</button>
             </div>
         </div>
     </div>
@@ -76,7 +102,7 @@
             <!-- Left: Content -->
             <div class="store-main">
                 <!-- About Tab -->
-                <section class="card p-2 mb-2">
+                <section class="card p-2 mb-2 section">
                     <h3 class="mb-1">About the Store</h3>
                     <p id="store-desc" class="text-muted">Loading description...</p>
                     <div class="grid grid-3 gap-2 mt-2 pt-2 border-top">
@@ -96,7 +122,7 @@
                 </section>
 
                 <!-- Products -->
-                <section class="mb-4">
+                <section class="mb-4 section">
                     <div class="flex justify-between items-center mb-2">
                         <h3>Available Products</h3>
                         <span class="fs-sm text-muted" id="product-count">0 items</span>
@@ -107,7 +133,7 @@
                 </section>
 
                 <!-- Reviews -->
-                <section class="card p-2">
+                <section class="card p-2 section">
                     <h3 class="mb-2">Buyer Reviews</h3>
                     <div class="space-y-2" id="store-reviews">
                         <p class="text-muted italic">No reviews yet for this store.</p>
@@ -121,8 +147,8 @@
                     <div class="card p-2 mb-2 bg-gray-light">
                         <h4 class="mb-1">Direct Sourcing</h4>
                         <p class="fs-xs text-muted mb-1-5">Request a custom quote specifically from this supplier.</p>
-                        <a href="/pages/marketplace/rfq.html" class="btn btn-outline btn-sm w-full mb-1">Send Direct RFQ</a>
-                        <button id="whatsapp-btn" class="btn btn-whatsapp w-full flex items-center justify-center gap-0-5">
+                        <a href="/pages/marketplace/rfq.html" class="btn-outline btn-sm w-full mb-1">Send Direct RFQ</a>
+                        <button id="btn-primary" class="btn btn-whatsapp w-full flex items-center justify-center gap-0-5">
                             <span>💬</span> WhatsApp Seller
                         </button>
                     </div>
@@ -141,6 +167,7 @@
     </main>
 
     <!-- Scripts -->
+    <script src="../../assets/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../assets/js/supabase-client.js"></script>
     <script src="../../assets/js/store.js"></script>

@@ -1,0 +1,331 @@
+/* ==========================================================================
+   Kavex Navbar — Shared Styles
+   Include via: <link rel="stylesheet" href="/assets/css/navbar.css">
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ── Variables ── */
+:root {
+    --kv-navy: var(--navy-mid);
+    --kv-orange: var(--orange);
+    --kv-orange-hover: var(--orange-dark);
+    --kv-text: #374151;
+    --kv-text-light: #6B7280;
+    --kv-border: #E8EAED;
+    --kv-white: #FFFFFF;
+}
+
+/* ── Base Navbar ── */
+.kv-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 68px;
+    background: var(--kv-white);
+    border-bottom: 1px solid var(--kv-border);
+    display: flex;
+    align-items: center;
+    padding: 0 48px;
+    transition: box-shadow 0.3s ease;
+}
+
+.kv-navbar--scrolled {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.kv-navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ── Logo (Two-tone Wordmark) ── */
+.kv-navbar__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.kv-navbar__logo-kav {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--kv-navy);
+    line-height: 1;
+}
+
+.kv-navbar__logo-ex {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--kv-orange);
+    line-height: 1;
+}
+
+/* ── Center Links (Desktop) ── */
+.kv-navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.kv-navbar__link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--kv-text);
+    text-decoration: none;
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.2s ease;
+}
+
+/* Animated underline */
+.kv-navbar__link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--kv-orange);
+    transition: width 0.2s ease;
+}
+
+.kv-navbar__link:hover {
+    color: var(--kv-navy);
+}
+
+.kv-navbar__link:hover::after {
+    width: 100%;
+}
+
+/* Active link */
+.kv-navbar__link.active {
+    color: var(--kv-navy);
+}
+
+.kv-navbar__link.active::after {
+    width: 100%;
+}
+
+/* ── Right Actions ── */
+.kv-navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Currency Dropdown Pill */
+.kv-navbar__currency {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--kv-text-light);
+    border: 1px solid var(--kv-border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    background: var(--kv-white);
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' fill='none' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+    transition: border-color 0.2s ease;
+}
+
+.kv-navbar__currency:hover,
+.kv-navbar__currency:focus {
+    border-color: var(--kv-navy);
+}
+
+/* Sign In — Ghost Button */
+.kv-navbar__signin {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--kv-navy);
+    background: transparent;
+    border: 1.5px solid var(--kv-navy);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.kv-navbar__signin:hover {
+    background: var(--kv-navy);
+    color: var(--kv-white);
+}
+
+/* Join Free — Primary CTA */
+.kv-navbar__join {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--kv-white);
+    background: var(--kv-orange);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.kv-navbar__join:hover {
+    background: var(--kv-orange-hover);
+    transform: scale(1.02);
+}
+
+/* ── Hamburger (Mobile) ── */
+.kv-navbar__hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+}
+
+.kv-navbar__hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--kv-text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger → X animation */
+.kv-navbar__hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.kv-navbar__hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.kv-navbar__hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile Drawer ── */
+.kv-navbar__drawer {
+    display: none;
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--kv-white);
+    border-bottom: 1px solid var(--kv-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.kv-navbar__drawer.open {
+    max-height: 500px;
+}
+
+.kv-navbar__drawer-links {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.kv-navbar__drawer-link {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--kv-text);
+    text-decoration: none;
+    padding: 0 20px;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid var(--kv-border);
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.kv-navbar__drawer-link:hover {
+    color: var(--kv-navy);
+    background: var(--gray-50);
+}
+
+.kv-navbar__drawer-link.active {
+    color: var(--kv-navy);
+    font-weight: 600;
+}
+
+.kv-navbar__drawer-actions {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kv-navbar__drawer-actions .kv-navbar__signin,
+.kv-navbar__drawer-actions .kv-navbar__join {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .kv-navbar {
+        padding: 0 20px;
+    }
+
+    .kv-navbar__links {
+        display: none;
+    }
+
+    .kv-navbar__currency,
+    .kv-navbar__signin,
+    .kv-navbar__join {
+        display: none;
+    }
+
+    .kv-navbar__hamburger {
+        display: flex;
+    }
+
+    .kv-navbar__drawer {
+        display: block;
+    }
+}
+
+/* ── Tablet tweaks (769–1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .kv-navbar {
+        padding: 0 24px;
+    }
+
+    .kv-navbar__links {
+        gap: 20px;
+    }
+}

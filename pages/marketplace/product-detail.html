@@ -13,6 +13,7 @@
     <meta property="og:image" content="https://kavex.ng/assets/img/og-product-placeholder.jpg">
 
     <!-- Performance Hints -->
+    <link rel="stylesheet" href="/assets/css/design-system.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -31,45 +32,51 @@
     </script>
 
     <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/navbar.css">
     <link rel="stylesheet" href="../../assets/css/product-detail.css">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
 
     <!-- Navbar -->
-    <nav class="navbar" role="navigation" aria-label="Main Navigation">
-        <div class="container nav-container">
-            <a href="/" class="logo" aria-label="Kavex Home">
-                <img src="/assets/img/logo.svg" alt="Kavex Logo" width="120" height="40">
+    <nav class="kv-navbar" role="navigation" aria-label="Main Navigation">
+        <div class="kv-navbar__inner">
+            <a href="/" class="kv-navbar__logo" aria-label="Kavex Home">
+                <span class="kv-navbar__logo-kav">Kav</span><span class="kv-navbar__logo-ex">ex</span>
             </a>
-            <div class="nav-links">
-                <a href="/pages/marketplace/products.html">Marketplace</a>
-                <a href="/pages/marketplace/global-buyers.html">Global Buyers</a>
-                <a href="/pages/marketplace/rfq.html">Submit RFQ</a>
-                <div id="auth-links" class="nav-auth">
-                    <a href="/pages/auth/login.html" class="btn btn-ghost">Sign In</a>
-                    <a href="/pages/auth/register-buyer.html" class="btn btn-primary">Join Free</a>
-                </div>
+            <div class="kv-navbar__links">
+                <a href="/pages/marketplace/products.html" class="kv-navbar__link">Marketplace</a>
+                <a href="/pages/marketplace/global-buyers.html" class="kv-navbar__link">Global Buyers</a>
+                <a href="/pages/marketplace/rfq.html" class="kv-navbar__link">Submit RFQ</a>
             </div>
-            
-            <div class="nav-actions">
-                <select id="currency-select" class="currency-select" aria-label="Switch Currency">
+            <div class="kv-navbar__actions">
+                <select class="kv-navbar__currency" aria-label="Switch Currency">
                     <option value="NGN">NGN (₦)</option>
                     <option value="USD">USD ($)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="EUR">EUR (€)</option>
                 </select>
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+                <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
             </div>
+            <button class="kv-navbar__hamburger" aria-label="Toggle Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+    <div class="kv-navbar__drawer" aria-label="Mobile Navigation">
+        <ul class="kv-navbar__drawer-links">
+            <li><a href="/pages/marketplace/products.html" class="kv-navbar__drawer-link">Marketplace</a></li>
+            <li><a href="/pages/marketplace/global-buyers.html" class="kv-navbar__drawer-link">Global Buyers</a></li>
+            <li><a href="/pages/marketplace/rfq.html" class="kv-navbar__drawer-link">Submit RFQ</a></li>
+        </ul>
+        <div class="kv-navbar__drawer-actions">
+            <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
+            <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
+        </div>
+    </div>
 
     <div class="container">
         <!-- Breadcrumb -->
@@ -84,7 +91,7 @@
             <main class="detail-main">
                 <div class="product-detail-grid">
                     <!-- Gallery -->
-                    <section class="product-gallery">
+                    <section class="product-gallery section">
                         <div class="main-img-container" id="main-image-zoom">
                             <img src="https://picsum.photos/seed/ginger/800/800" id="main-product-img" alt="Main Ginger Image">
                         </div>
@@ -96,12 +103,12 @@
                         </div>
                         <p class="img-counter text-muted" id="img-counter">1 of 4</p>
                         <div class="gallery-actions text-center">
-                            <button class="btn btn-ghost w-full">Request Sample</button>
+                            <button class="btn-ghost w-full">Request Sample</button>
                         </div>
                     </section>
 
                     <!-- Info -->
-                    <section class="product-info">
+                    <section class="product-info section">
                         <div class="product-info-header">
                             <h1>Premium Grade A Dried Ginger (Split) - 2026 Season</h1>
                             <div class="seller-row">
@@ -165,8 +172,8 @@
                             </div>
                             <div class="live-total" id="live-total">Total: <span class="price-display" data-price-ngn="8500">₦8,500</span> for 1 unit</div>
                             <div class="buy-actions">
-                                <button class="btn btn-primary">Add to Order</button>
-                                <button class="btn btn-ghost">Request Custom Quote</button>
+                                <button class="btn-primary">Add to Order</button>
+                                <button class="btn-ghost">Request Custom Quote</button>
                             </div>
                         </div>
 
@@ -216,10 +223,10 @@
                 <div class="sidebar-card">
                     <h3 class="mb-1 fb-1-1">Contact Seller</h3>
                     <div class="flex-col gap-0-75">
-                        <button class="btn btn-ghost w-full whatsapp-btn">
+                        <button class="btn-ghost w-full btn-primary">
                             WhatsApp Chat
                         </button>
-                        <button class="btn btn-ghost w-full">Send Email</button>
+                        <button class="btn-ghost w-full">Send Email</button>
                     </div>
                 </div>
 
@@ -228,7 +235,7 @@
                     <p class="fs-sm text-muted mb-1">Need a custom price or specific logistics?</p>
                     <textarea aria-label="RFQ Requirements" placeholder="Specify requirements..."></textarea>
                     <input type="number" aria-label="Estimated Quantity" placeholder="Est. Quantity" class="w-full mb-1 p-0-75 border-1 br-6">
-                    <button class="btn btn-primary w-full" onclick="submitMiniRfq()">Send RFQ</button>
+                    <button class="btn-primary w-full" onclick="submitMiniRfq()">Send RFQ</button>
                 </div>
 
                 <div class="sidebar-card">
@@ -255,7 +262,7 @@
         </div>
 
         <!-- You May Also Like -->
-        <section class="mt-5">
+        <section class="mt-5 section">
             <div class="section-header">
                 <h2>You May Also Like</h2>
                 <a href="/pages/marketplace/products.html" class="orange-link">View All</a>
@@ -278,6 +285,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="../../assets/js/navbar.js"></script>
     <script src="../../assets/js/supabase-client.js"></script>
     <script src="../../assets/js/auth.js"></script>
     <script src="../../assets/js/main.js"></script>

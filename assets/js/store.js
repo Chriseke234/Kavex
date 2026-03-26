@@ -73,7 +73,7 @@ function renderStoreHeader(seller) {
     document.getElementById('store-rating').textContent = `⭐ ${seller.rating_avg.toFixed(1)} (${seller.reviews_count} Reviews)`;
 
     // WhatsApp Link
-    const whatsappBtn = document.getElementById('whatsapp-btn');
+    const whatsappBtn = document.getElementById('btn-primary');
     whatsappBtn.onclick = () => {
         const phone = seller.profiles.phone || '+2348000000000';
         const msg = encodeURIComponent(`Hi, I'm interested in sourcing from your Kavex store: ${seller.store_name}`);

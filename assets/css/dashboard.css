@@ -47,7 +47,7 @@ body.dashboard-body {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    background: var(--primary-orange);
+    background: var(--orange);
 }
 
 .nav-menu {
@@ -63,7 +63,7 @@ body.dashboard-body {
     padding: 0.75rem 1.5rem;
     color: rgba(255,255,255,0.7);
     text-decoration: none;
-    transition: var(--transition);
+    transition: all 0.2s ease;
     border-left: 3px solid transparent;
     cursor: pointer;
 }
@@ -74,8 +74,8 @@ body.dashboard-body {
 }
 
 .nav-item.active {
-    border-left-color: var(--primary-orange);
-    color: var(--primary-orange);
+    border-left-color: var(--orange);
+    color: var(--orange);
 }
 
 .sidebar-footer {
@@ -94,7 +94,7 @@ body.dashboard-body {
 .top-bar {
     height: var(--topbar-height);
     background: white;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
     padding: 0 2rem;
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@ body.dashboard-body {
 
 .search-bar-dash input {
     width: 100%;
-    background: var(--bg-light);
+    background: var(--gray-50);
     border: none;
     padding: 0.6rem 1rem 0.6rem 2.5rem;
     border-radius: 8px;
@@ -133,7 +133,7 @@ body.dashboard-body {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: var(--primary-orange);
+    background: var(--orange);
     color: white;
     font-size: 0.6rem;
     width: 16px;
@@ -166,12 +166,12 @@ body.dashboard-body {
     background: white;
     padding: 1.5rem;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
 }
 
 .stat-label {
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--gray-600);
     margin-bottom: 0.5rem;
 }
 
@@ -192,7 +192,7 @@ body.dashboard-body {
 .dash-table-container {
     background: white;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--gray-200);
     overflow: hidden;
 }
 
@@ -207,13 +207,13 @@ body.dashboard-body {
     text-align: left;
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border-color);
+    color: var(--gray-600);
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .dash-table td {
     padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
     font-size: 0.9rem;
 }
 
@@ -250,7 +250,7 @@ body.dashboard-body {
 
 .slide-over-header {
     padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--gray-200);
     display: flex;
     justify-content: space-between;
 }
@@ -292,7 +292,7 @@ body.dashboard-body {
 
 .rating-input span {
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.2s ease;
 }
 
 .rating-input span:hover {

@@ -325,95 +325,49 @@ function sortData(data, criteria) {
 }
 
 function renderProducts(products) {
-    const container = document.querySelector('#products-container');
-    const countEl = document.querySelector('#results-count');
-    countEl.textContent = `Showing ${products.length} products`;
-
-    if (products.length === 0) {
-        container.innerHTML = '<div class="no-results">No products found matching your filters.</div>';
-        return;
-    }
-
     container.innerHTML = products.map(p => {
-        const discount = Math.round((1 - p.price / p.originalPrice) * 100);
-        
-        if (currentView === 'grid') {
-            return `
-                <div class="product-card">
-                    <button class="wishlist-btn" aria-label="Add to Wishlist">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
+        const catClassMap = {
+            "Agriculture & Food": "cat-pill-agriculture",
+            "Textiles & Fashion": "cat-pill-textiles",
+            "Electronics": "cat-pill-electronics",
+            "Industrial & Manufacturing": "cat-pill-industrial",
+            "Beauty & Wellness": "cat-pill-beauty",
+            "Raw Materials": "cat-pill-raw-materials"
+        };
+        const catClass = catClassMap[p.category] || "cat-pill-default";
+
+        return `
+            <a href="/pages/marketplace/product-detail.html?id=${p.id}" class="product-card">
+                <div class="product-img-area">
+                    <span class="product-cat-pill ${catClass}">${p.category}</span>
+                    <button class="wishlist-btn" aria-label="Add to Wishlist" onclick="event.preventDefault();">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
                     </button>
-                    <a href="/pages/marketplace/product-detail.html?id=${p.id}" class="product-link">
-                        <div class="product-img-wrapper">
-                            <img src="${p.image}" alt="${p.title}">
+                    <img src="${p.image}" alt="${p.title}">
+                </div>
+                <div class="product-content">
+                    <div class="product-info-left">
+                        <h3 class="product-title">${p.title}</h3>
+                        <div class="seller-row">
+                            ${p.isVerified ? '<svg class="seller-verified-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>' : ''}
+                            <span>${p.seller} &middot; ${p.location}</span>
                         </div>
-                        <div class="product-info">
-                            <span class="cat-badge">${p.category}</span>
-                            <h3 class="product-title">${p.title}</h3>
-                            <div class="seller-info">
-                                <span>${p.seller}</span>
-                                ${p.isVerified ? '<svg class="verified-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>' : ''}
-                                <span>• ${p.location}</span>
-                            </div>
-                            <div class="price-row">
-                                <span class="current-price price-display" data-price-ngn="${p.price}">₦${p.price.toLocaleString()}</span>
-                                <span class="original-price">₦${p.originalPrice.toLocaleString()}</span>
-                                <span class="discount-percentage">-${discount}%</span>
-                                <span class="moq-info">MOQ: ${p.moq} ${p.unit}s</span>
-                            </div>
-                            <div class="rating-row">
-                                <span class="stars">★★★★★</span>
-                                <span class="reviews-count">(${p.reviews})</span>
-                            </div>
+                    </div>
+                    <div class="product-price-row">
+                        <div class="price-main">
+                            <span class="price-label">Wholesale Price</span>
+                            <span class="price-value" data-price-ngn="${p.price}">₦${p.price.toLocaleString()}</span>
                         </div>
-                    </a>
-                    <div class="product-actions" style="padding: 0 1rem 1rem;">
-                        <button class="btn btn-ghost btn-sm">Request Quote</button>
-                        <a href="/pages/marketplace/product-detail.html?id=${p.id}" class="btn btn-primary btn-sm" style="text-align: center; display: flex; align-items: center; justify-content: center;">View Product</a>
+                        <span class="moq-badge">MOQ: ${p.moq} ${p.unit}</span>
                     </div>
                 </div>
-            `;
-        } else {
-            return `
-                <div class="product-card">
-                    <button class="wishlist-btn" aria-label="Add to Wishlist">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg>
-                    </button>
-                    <div class="product-img-wrapper">
-                        <img src="${p.image}" alt="${p.title}">
-                    </div>
-                    <div class="product-info">
-                        <div class="info-main">
-                            <span class="cat-badge">${p.category}</span>
-                            <h3 class="product-title" style="height: auto; -webkit-line-clamp: 1;">${p.title}</h3>
-                            <div class="seller-info">
-                                <span>${p.seller}</span>
-                                ${p.isVerified ? '<svg class="verified-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"></path></svg>' : ''}
-                                <span>• ${p.location}</span>
-                            </div>
-                            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1rem;">Export quality Nigerian ${p.title.toLowerCase()}. Reliable supply chain, consistent grade, and competitive bulk pricing.</p>
-                            <div class="rating-row">
-                                <span class="stars">★★★★★</span>
-                                <span class="reviews-count">(${p.reviews} reviews)</span>
-                            </div>
-                        </div>
-                        <div class="info-side">
-                            <div class="price-row">
-                                <div class="current-price price-display" data-price-ngn="${p.price}">₦${p.price.toLocaleString()}</div>
-                                <span class="original-price">₦${p.originalPrice.toLocaleString()}</span>
-                                <span class="moq-info">MOQ: ${p.moq} units</span>
-                            </div>
-                            <div class="product-actions" style="grid-template-columns: 1fr;">
-                                <button class="btn btn-primary btn-sm">View Product</button>
-                                <button class="btn btn-ghost btn-sm">Request Quote</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+            </a>
+        `;
     }).join('');
 
     // Re-initialize currency switcher for new elements if existing
-    if (window.updatePrices) window.updatePrices(document.querySelector('#currency-select').value);
+    if (window.updatePrices) {
+        const savedCurrency = localStorage.getItem('kavex-currency') || 'NGN';
+        window.updatePrices(savedCurrency);
+    }
 }
