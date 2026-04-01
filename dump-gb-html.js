@@ -1,42 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Buyers | Kavex — International Sourcing Portal for Nigerian Goods</title>
-    <meta name="description" content="The dedicated portal for international sourcing managers. Direct access to premium Nigerian exports, DHL-integrated shipping, and secure escrow payments.">
-    
-    <!-- PWA & Favicon -->
-    <link rel="stylesheet" href="/assets/css/design-system.css">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#001f3f">
-    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
+const fs = require('fs');
 
-    <!-- OG & Twitter -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Global Buyers Portal | Kavex">
-    <meta property="og:description" content="A secure bridge for international buyers to source Nigerian commodities.">
-    <meta property="og:image" content="https://kavex.ng/assets/img/og-global-buyers.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Canonical -->
-    <link rel="canonical" href="https://kavex.ng/pages/marketplace/global-buyers.html">
-
-    <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/global-buyers.css">
-    <!-- Shared Navbar Injection -->
-    <script>
-      fetch('/assets/components/navbar.html')
-        .then(r => r.text())
-        .then(html => {
-          document.body.insertAdjacentHTML('afterbegin', html);
-        });
-    </script>
-</head>
-<body style="padding-top: 68px;">
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <main id="main-content">
+const htmlContent = `
+<main id="main-content">
     <!-- SECTION 1: HERO -->
     <section class="gb-hero section">
         <div class="gb-hero-pattern"></div>
@@ -295,12 +260,19 @@
         </div>
     </section>
 </main>
+`;
 
-    <footer class="bg-gray py-4 mt-6">
-        <div class="container text-center text-muted fs-sm">
-            <p>&copy; 2026 Kavex B2B Marketplace. All rights reserved.</p>
-        </div>
-    </footer>
+const file = 'c:/Users/CHRIS/Kavex/pages/marketplace/global-buyers.html';
+let content = fs.readFileSync(file, 'utf8');
 
-</body>
-</html>
+// The main block has id="main-content"
+const startIndex = content.indexOf('<main id="main-content">');
+const endIndex = content.indexOf('</main>', startIndex) + 7;
+
+if (startIndex !== -1 && endIndex !== -1) {
+    const newContent = content.substring(0, startIndex) + htmlContent.trim() + content.substring(endIndex);
+    fs.writeFileSync(file, newContent, 'utf8');
+    console.log("Updated global-buyers.html successfully.");
+} else {
+    console.log("Could not find main tag.");
+}

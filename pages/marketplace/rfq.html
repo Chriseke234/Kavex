@@ -25,49 +25,18 @@
     <link rel="preconnect" href="https://api.resend.com">
 
     <link rel="stylesheet" href="../../assets/css/main.css">
-    <link rel="stylesheet" href="../../assets/css/navbar.css">
     <link rel="stylesheet" href="../../assets/css/rfq.css">
+    <!-- Shared Navbar Injection -->
+    <script>
+      fetch('/assets/components/navbar.html')
+        .then(r => r.text())
+        .then(html => {
+          document.body.insertAdjacentHTML('afterbegin', html);
+        });
+    </script>
 </head>
-<body>
+<body style="padding-top: 68px;">
     <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- Navbar -->
-    <nav class="kv-navbar" role="navigation" aria-label="Main Navigation">
-        <div class="kv-navbar__inner">
-            <a href="/" class="kv-navbar__logo" aria-label="Kavex Home">
-                <span class="kv-navbar__logo-kav">Kav</span><span class="kv-navbar__logo-ex">ex</span>
-            </a>
-            <div class="kv-navbar__links">
-                <a href="/pages/marketplace/products.html" class="kv-navbar__link">Marketplace</a>
-                <a href="/pages/marketplace/global-buyers.html" class="kv-navbar__link">Global Buyers</a>
-                <a href="/pages/marketplace/rfq.html" class="kv-navbar__link">Submit RFQ</a>
-            </div>
-            <div class="kv-navbar__actions">
-                <select class="kv-navbar__currency" aria-label="Switch Currency">
-                    <option value="NGN">NGN (₦)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="EUR">EUR (€)</option>
-                </select>
-                <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
-                <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
-            </div>
-            <button class="kv-navbar__hamburger" aria-label="Toggle Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
-    <div class="kv-navbar__drawer" aria-label="Mobile Navigation">
-        <ul class="kv-navbar__drawer-links">
-            <li><a href="/pages/marketplace/products.html" class="kv-navbar__drawer-link">Marketplace</a></li>
-            <li><a href="/pages/marketplace/global-buyers.html" class="kv-navbar__drawer-link">Global Buyers</a></li>
-            <li><a href="/pages/marketplace/rfq.html" class="kv-navbar__drawer-link">Submit RFQ</a></li>
-        </ul>
-        <div class="kv-navbar__drawer-actions">
-            <a href="/pages/auth/login.html" class="kv-navbar__signin">Sign In</a>
-            <a href="/pages/auth/register-buyer.html" class="kv-navbar__join">Join Free</a>
-        </div>
-    </div>
 
     <div class="rfq-compact-header">
         <div class="container">
@@ -304,7 +273,6 @@
     </template>
 
     <!-- Scripts -->
-    <script src="../../assets/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../../assets/js/supabase-client.js"></script>
     <script src="../../assets/js/rfq.js"></script>

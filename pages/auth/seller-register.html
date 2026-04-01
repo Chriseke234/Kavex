@@ -13,18 +13,20 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Shared Navbar Injection -->
+    <script>
+      fetch('/assets/components/navbar.html')
+        .then(r => r.text())
+        .then(html => {
+          document.body.insertAdjacentHTML('afterbegin', html);
+        });
+    </script>
 </head>
-<body>
+<body style="padding-top: 68px;">
 
     <div class="auth-split-layout">
         <!-- LEFT PANEL (Sticky) -->
         <aside class="auth-left-panel">
-            <div class="mobile-header">
-                <a href="/" class="auth-logo">
-                    <span class="kav">Kav</span><span class="ex">ex</span>
-                </a>
-            </div>
             
             <div class="auth-left-content">
                 <h2>Join Africa's most trusted B2B marketplace</h2>
@@ -54,11 +56,11 @@
         </aside>
 
         <!-- RIGHT PANEL (Scrollable) -->
-        <main class="auth-right-panel" id="wizard-right-panel">
+        <main class="auth-right-panel" id="right-panel">
             <div class="wizard-form-container">
                 
                 <!-- Progress Section -->
-                <header class="step-header">
+                <header class="step-header" id="progress-section">
                     <div class="step-counter" id="step-counter">Step 1 of 6</div>
                     <div class="progress-track">
                         <div class="progress-fill" id="progress-fill"></div>
@@ -67,10 +69,11 @@
                     <p class="step-subtitle" id="step-subtitle">Start with your basic account details</p>
                 </header>
 
+                <div id="steps-container">
                 <form id="wizard-form" autocomplete="off">
                     
                     <!-- STEP 1: ACCOUNT -->
-                    <div class="wizard-step active" id="step-1">
+                    <div class="kv-step" data-step="1" style="display:none">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="full_name">Full Name</label>
@@ -116,7 +119,7 @@
                     </div>
 
                     <!-- STEP 2: BUSINESS INFO -->
-                    <div class="wizard-step" id="step-2">
+                    <div class="kv-step" data-step="2" style="display:none">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="business_name">Business Name</label>
@@ -180,7 +183,7 @@
                     </div>
 
                     <!-- STEP 3: VERIFICATION -->
-                    <div class="wizard-step" id="step-3">
+                    <div class="kv-step" data-step="3" style="display:none">
                         <div class="form-group">
                             <label for="cac_number">CAC Registration Number</label>
                             <input type="text" id="cac_number" name="cac_number" placeholder="RC123456" required>
@@ -221,7 +224,7 @@
                     </div>
 
                     <!-- STEP 4: SETTLEMENT -->
-                    <div class="wizard-step" id="step-4">
+                    <div class="kv-step" data-step="4" style="display:none">
                         <div class="form-group">
                             <label for="bank_name">Bank Name</label>
                             <select id="bank_name" name="bank_name" required>
@@ -243,7 +246,7 @@
                     </div>
 
                     <!-- STEP 5: STORE SETUP -->
-                    <div class="wizard-step" id="step-5">
+                    <div class="kv-step" data-step="5" style="display:none">
                         <div class="form-group">
                             <label for="store_name">Store Name</label>
                             <input type="text" id="store_name" name="store_name" placeholder="e.g. Lagos Spices Hub" required>
@@ -277,7 +280,7 @@
                     </div>
 
                     <!-- STEP 6: REVIEW -->
-                    <div class="wizard-step" id="step-6">
+                    <div class="kv-step" data-step="6" style="display:none">
                         <div class="summary-card" id="summary-card">
                             <!-- Populated by JS -->
                         </div>
@@ -297,6 +300,7 @@
                     </div>
 
                 </form>
+                </div>
 
                 <!-- Success Screen -->
                 <div class="success-screen" id="success-screen">
@@ -311,16 +315,16 @@
 
                 <!-- Bottom Navigation -->
                 <nav class="bottom-nav" id="bottom-nav">
-                    <button type="button" class="btn-back" id="btn-back" onclick="prevStep()">Back</button>
+                    <button type="button" class="btn-back" id="kv-back">Back</button>
                     <div class="step-dots">
-                        <div class="dot active"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
+                        <div class="dot active" id="dot-1"></div>
+                        <div class="dot" id="dot-2"></div>
+                        <div class="dot" id="dot-3"></div>
+                        <div class="dot" id="dot-4"></div>
+                        <div class="dot" id="dot-5"></div>
+                        <div class="dot" id="dot-6"></div>
                     </div>
-                    <button type="button" class="btn-continue" id="btn-continue" onclick="nextStep()">Continue →</button>
+                    <button type="button" class="btn-continue" id="kv-continue">Continue →</button>
                 </nav>
 
             </div>
@@ -336,6 +340,102 @@
             const input = document.getElementById(id);
             input.type = input.type === 'password' ? 'text' : 'password';
         }
+
+let currentStep = 1;
+const totalSteps = 6;
+
+const stepTitles = [
+  "Create Your Account",
+  "Business Information",
+  "Verification Documents",
+  "Settlement Account",
+  "Set Up Your Store",
+  "Review & Submit"
+];
+
+function showStep(n) {
+  // Hide all steps
+  document.querySelectorAll('.kv-step').forEach(el => {
+    el.style.display = 'none';
+  });
+  // Show target step
+  const target = document.querySelector(
+    '.kv-step[data-step="' + n + '"]'
+  );
+  if (target) target.style.display = 'block';
+
+  // Update counter
+  const counter = document.getElementById('step-counter');
+  if (counter) counter.textContent = 'Step ' + n + ' of 6';
+
+  // Update title
+  const title = document.getElementById('step-title');
+  if (title) title.textContent = stepTitles[n - 1];
+
+  // Update progress bar fill
+  const fill = document.getElementById('progress-fill');
+  if (fill) fill.style.width = ((n / totalSteps) * 100) + '%';
+
+  // Update dots
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    if (i < n) dot.style.background = '#EA580C';
+    else if (i === n) dot.style.background = '#0F4C81';
+    else dot.style.background = '#E5E7EB';
+  }
+
+  // Back button visibility
+  const backBtn = document.getElementById('kv-back');
+  if (backBtn) {
+    backBtn.style.opacity = n === 1 ? '0' : '1';
+    backBtn.style.pointerEvents = n === 1 ? 'none' : 'auto';
+  }
+
+  // Continue button text
+  const continueBtn = document.getElementById('kv-continue');
+  if (continueBtn) {
+    continueBtn.textContent =
+      n === 6 ? 'Submit Application' : 'Continue →';
+  }
+
+  // Scroll right panel to top
+  const panel = document.getElementById('right-panel');
+  if (panel) panel.scrollTop = 0;
+  else window.scrollTo(0, 0);
+
+  currentStep = n;
+}
+
+// Wire up Back button
+const backBtn = document.getElementById('kv-back');
+if (backBtn) backBtn.addEventListener('click', () => {
+  if (currentStep > 1) showStep(currentStep - 1);
+});
+
+// Wire up Continue button
+const continueBtn = document.getElementById('kv-continue');
+if (continueBtn) continueBtn.addEventListener('click', () => {
+  if (currentStep < totalSteps) showStep(currentStep + 1);
+  else {
+    // Submit — show success screen
+    document.getElementById('steps-container').style.display
+      = 'none';
+    const nav = document.getElementById('kv-nav'); // Updated from kv-nav-bar to match component
+    if (nav) nav.style.display = 'none';
+    const progress = document.getElementById('progress-section');
+    if (progress) progress.style.display = 'none';
+    const success = document.getElementById('success-screen');
+    if (success) success.style.display = 'flex';
+  }
+});
+
+// Also hide the success screen on load
+const successScreen = document.getElementById('success-screen');
+if (successScreen) successScreen.style.display = 'none';
+
+// Initialize to step 1
+showStep(1);
     </script>
 </body>
 </html>

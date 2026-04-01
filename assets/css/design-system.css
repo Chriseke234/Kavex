@@ -28,11 +28,29 @@
   --radius-xl: 20px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
-  --shadow-orange: 0 6px 20px rgba(234,88,12,0.35);
-  --shadow-navy: 0 8px 24px rgba(15,76,129,0.2);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+  --shadow-xl: 0 24px 64px rgba(15,76,129,0.15);
+  --shadow-orange: 0 8px 24px rgba(234,88,12,0.25);
+  --shadow-navy: 0 10px 32px rgba(15,76,129,0.18);
+
+  /* Glassmorphism */
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --border-glass: rgba(255, 255, 255, 0.4);
+  --blur-glass: 12px;
+
+  /* Gradients */
+  --grad-navy: linear-gradient(135deg, #0F4C81 0%, #0A2540 100%);
+  --grad-orange: linear-gradient(135deg, #EA580C 0%, #C84B0A 100%);
+}
+
+/* Glass Utility */
+.glass {
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  backdrop-filter: blur(var(--blur-glass));
+  border: 1.5px solid var(--border-glass);
 }
 
 /* Global Typography & Reset */
